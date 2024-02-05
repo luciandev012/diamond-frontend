@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -21,7 +22,12 @@ a {
   color: #1f1f1f !important;
   cursor: pointer;
 }
-
+header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 9;
+}
 .header-right-item {
   margin: 0.5rem;
 }
@@ -47,14 +53,14 @@ a {
   margin-bottom: 0;
 }
 
-.header-menu li {
+.menu-item {
   cursor: pointer;
   text-transform: uppercase;
   padding: 10px;
   position: relative;
 }
 
-.header-menu li::after {
+.menu-item::before {
   content: "";
   position: absolute;
   top: 0;
@@ -66,10 +72,23 @@ a {
   z-index: 10;
 }
 
-.header-menu li:hover:after {
+.menu-item:hover::before {
   opacity: 1;
 }
-
+.menu-item:hover .sub-menu {
+  display: block;
+}
+.sub-menu {
+  display: none;
+  position: absolute;
+  left: 9%;
+  top: 40px;
+  transform: translate(-37%);
+  background-color: #fff;
+  width: 100vw;
+  height: 380px;
+  overflow-y: auto;
+}
 .banner-img {
   margin-top: -1px;
   max-height: 80vh;
@@ -83,12 +102,14 @@ a {
   width: 80%;
   margin: auto;
   display: flex;
+  height: 100%;
 }
 .sub-menu-left {
   width: 60%;
 }
 .sub-menu-right {
   width: 40%;
+  display: flex;
 }
 .sub-menu-by-type {
   margin: 25px 0px;
@@ -98,6 +119,7 @@ a {
 }
 .view-all {
   text-decoration: underline !important;
+  text-transform: initial;
 }
 .sub-menu-items {
   display: inline-block;
@@ -106,8 +128,95 @@ a {
   border: 1px solid #1f1f1f;
   padding: 5px;
   margin: 5px;
+  display: inline-block;
+  text-transform: initial;
 }
 .img-item {
   width: 100px;
   display: inline-block;
+}
+.img-item p {
+  text-align: center;
+  text-transform: initial;
+}
+
+.guide {
+  width: 40%;
+  background-color: #e3dedc;
+  padding: 10px 20px;
+}
+.guide p {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 16px;
+}
+.guides {
+  padding: 0;
+}
+.guide-item {
+  padding: 5px;
+}
+li.guide-item a {
+  text-transform: initial;
+}
+li.guide-item a:hover {
+  color: #000 !important;
+}
+.discover {
+  width: 60%;
+  background-image: url("diamond_rings.png");
+  text-align: center;
+  padding: 15px;
+}
+.discover p {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0 40px;
+}
+.discover p button {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  padding: 5px;
+  text-transform: uppercase;
+  font-size: 14px;
+  border: none;
+}
+
+.main {
+  height: 90vh;
+  width: 100%;
+  background-color: #e3dedc;
+  padding-top: 100px;
+  position: relative;
+}
+.text-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 550px;
+}
+.text-content h1 {
+  text-transform: uppercase;
+  width: 100%;
+  letter-spacing: 0.8rem;
+  padding-left: 10px;
+  margin-bottom: 4rem;
+}
+.text-content p {
+  margin-bottom: 1rem;
+}
+.hollow-button {
+  border: 1px solid #1f1f1f;
+  padding: 0.5rem 2rem;
+  margin: 1.5rem;
+  display: inline-block;
+  background-color: #e3dedc;
+}
+.hollow-button:hover {
+  background-color: #1f1f1f;
+  color: #fff !important;
 }
