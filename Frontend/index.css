@@ -220,3 +220,19 @@ li.guide-item a:hover {
   background-color: #1f1f1f;
   color: #fff !important;
 }
+.must-have-section {
+  background-color: #ece6e8;
+  padding: 2rem 0;
+  text-align: center;
+}
+.must-have-section h2 {
+  text-transform: uppercase;
+}
+.grid-slide {
+  width: 60%;
+  margin: 0 auto;
+}
+.social-network {
+  background-color: #f0ede8;
+  padding: 1rem 0;
+}
