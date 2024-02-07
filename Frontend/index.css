@@ -236,3 +236,43 @@ li.guide-item a:hover {
   background-color: #f0ede8;
   padding: 1rem 0;
 }
+.follow,
+.footer-container,
+.copy-right {
+  width: 80rem;
+  margin: 0 auto !important;
+}
+.footer-container {
+  border-bottom: 1px solid #1f1f1f;
+}
+footer {
+  background-color: #fff !important;
+  padding-bottom: 4rem;
+}
+.social-text {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+.social-icon {
+  padding: 0 0.5rem;
+}
+.social-icon i {
+  font-size: 1.5rem;
+}
+.footer-item {
+  padding-top: 1rem;
+  padding-left: 0 !important;
+}
+.accord-title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.accordination {
+  padding-left: 0 !important;
+}
+.accordination li {
+  line-height: 2rem;
+}
+.copy-right {
+  margin-top: 1rem !important;
+}
