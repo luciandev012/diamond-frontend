@@ -1,0 +1,278 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  color: #1f1f1f !important;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+a {
+  text-decoration: none !important;
+  color: #1f1f1f !important;
+  cursor: pointer;
+}
+header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 9;
+}
+.header-right-item {
+  margin: 0.5rem;
+}
+
+.logo-container {
+}
+
+.logo-img {
+  width: 100px;
+  height: 50px;
+  margin: auto;
+  display: block;
+}
+
+.text-logo {
+  font-size: 2rem;
+}
+
+.header-menu {
+  display: flex;
+  box-shadow: inset 0px -0.8px 0px 0px silver;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.menu-item {
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 10px;
+  position: relative;
+}
+
+.menu-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 3px solid #000;
+  opacity: 0;
+  z-index: 10;
+}
+
+.menu-item:hover::before {
+  opacity: 1;
+}
+.menu-item:hover .sub-menu {
+  display: block;
+}
+.sub-menu {
+  display: none;
+  position: absolute;
+  left: 9%;
+  top: 40px;
+  transform: translate(-37%);
+  background-color: #fff;
+  width: 100vw;
+  height: 380px;
+  overflow-y: auto;
+}
+.banner-img {
+  margin-top: -1px;
+  max-height: 80vh;
+}
+.banner-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.sub-menu-container {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  height: 100%;
+}
+.sub-menu-left {
+  width: 60%;
+}
+.sub-menu-right {
+  width: 40%;
+  display: flex;
+}
+.sub-menu-by-type {
+  margin: 25px 0px;
+}
+.type {
+  font-weight: 700;
+}
+.view-all {
+  text-decoration: underline !important;
+  text-transform: initial;
+}
+.sub-menu-items {
+  display: inline-block;
+}
+.sub-menu-item {
+  border: 1px solid #1f1f1f;
+  padding: 5px;
+  margin: 5px;
+  display: inline-block;
+  text-transform: initial;
+}
+.img-item {
+  width: 100px;
+  display: inline-block;
+}
+.img-item p {
+  text-align: center;
+  text-transform: initial;
+}
+
+.guide {
+  width: 40%;
+  background-color: #e3dedc;
+  padding: 10px 20px;
+}
+.guide p {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 16px;
+}
+.guides {
+  padding: 0;
+}
+.guide-item {
+  padding: 5px;
+}
+li.guide-item a {
+  text-transform: initial;
+}
+li.guide-item a:hover {
+  color: #000 !important;
+}
+.discover {
+  width: 60%;
+  background-image: url("/public/images/diamond_rings.png");
+  text-align: center;
+  padding: 15px;
+}
+.discover p {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0 40px;
+}
+.discover p button {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  padding: 5px;
+  text-transform: uppercase;
+  font-size: 14px;
+  border: none;
+}
+
+.main {
+  height: 90vh;
+  width: 100%;
+  background-color: #e3dedc;
+  padding-top: 100px;
+  position: relative;
+}
+.text-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 550px;
+}
+.text-content h1 {
+  text-transform: uppercase;
+  width: 100%;
+  letter-spacing: 0.8rem;
+  padding-left: 10px;
+  margin-bottom: 4rem;
+}
+.text-content p {
+  margin-bottom: 1rem;
+}
+.hollow-button {
+  border: 1px solid #1f1f1f;
+  padding: 0.5rem 2rem;
+  margin: 1.5rem;
+  display: inline-block;
+  background-color: #e3dedc;
+}
+.hollow-button:hover {
+  background-color: #1f1f1f;
+  color: #fff !important;
+}
+.must-have-section {
+  background-color: #ece6e8;
+  padding: 2rem 0;
+  text-align: center;
+}
+.must-have-section h2 {
+  text-transform: uppercase;
+}
+.grid-slide {
+  width: 60%;
+  margin: 0 auto;
+}
+.social-network {
+  background-color: #f0ede8;
+  padding: 1rem 0;
+}
+.follow,
+.footer-container,
+.copy-right {
+  width: 80rem;
+  margin: 0 auto !important;
+}
+.footer-container {
+  border-bottom: 1px solid #1f1f1f;
+}
+footer {
+  background-color: #fff !important;
+  padding-bottom: 4rem;
+}
+.social-text {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+.social-icon {
+  padding: 0 0.5rem;
+}
+.social-icon i {
+  font-size: 1.5rem;
+}
+.footer-item {
+  padding-top: 1rem;
+  padding-left: 0 !important;
+}
+.accord-title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.accordination {
+  padding-left: 0 !important;
+}
+.accordination li {
+  line-height: 2rem;
+}
+.copy-right {
+  margin-top: 1rem !important;
+}
