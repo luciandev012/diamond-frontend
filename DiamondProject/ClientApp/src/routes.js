@@ -1,6 +1,8 @@
 import { useRoutes } from "react-router-dom";
 import MainLayout from "./layout/MainLayout/MainLayout";
-import HomePage from "./views/HomePage/HomePage";
+import HomePage from "./views/Client/HomePage/HomePage";
+import AdminLayout from "./layout/AdminLayout/AdminLayout";
+import HomeAdmin from "./views/Admin/HomeAdmin/HomeAdmin";
 
 export default function Route() {
   return useRoutes([
@@ -9,8 +11,18 @@ export default function Route() {
       element: <MainLayout />,
       children: [
         {
-          path: "/",
+          path: "",
           element: <HomePage />,
+        },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "",
+          element: <HomeAdmin />,
         },
       ],
     },
