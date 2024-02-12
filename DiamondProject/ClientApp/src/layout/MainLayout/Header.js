@@ -1,4 +1,5 @@
 import React from "react";
+import "./header.css";
 
 export default function Header() {
   return (
@@ -34,17 +35,19 @@ export default function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <form className="d-flex">
-                  <input
-                    className="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <button className="btn btn-outline-success" type="submit">
-                    Search
-                  </button>
-                </form>
+                <div className="search-container">
+                  <span>
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </span>
+                  <form className="d-flex">
+                    <input
+                      className="search-input"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                  </form>
+                </div>
               </li>
             </ul>
             <div>

@@ -1,0 +1,11 @@
+.search-container {
+  display: flex;
+}
+.search-container span {
+  padding: 10px 10px 0 0;
+}
+.search-input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #1f1f1f;
+}
