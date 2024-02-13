@@ -1,8 +1,20 @@
+using DiamondProject.Models;
+using DiamondProject.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(option => option.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+builder.Services.AddDbContext<DiamondDbContext>(option =>
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DiamondDbContext")));
+
+builder.Services.AddTransient<RingCategoryServices>();
+builder.Services.AddTransient<RingServices>();
+builder.Services.AddTransient<ImageServices>();
 
 var app = builder.Build();
 
