@@ -17,6 +17,15 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddDbContext<DiamondDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DiamondDbContext")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myCORS",
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:44400").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+        });
+});
+
 builder.Services.AddTransient<RingCategoryServices>();
 builder.Services.AddTransient<RingServices>();
 builder.Services.AddTransient<ImageServices>();
@@ -31,7 +40,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("myCORS");
 app.UseStaticFiles();
+app.UseAuthorization();
 app.UseRouting();
 
 

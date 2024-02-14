@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function SideContent() {
   return (
@@ -16,8 +17,9 @@ export default function SideContent() {
               </div>
               Dashboard
             </a>
-            <div className="sb-sidenav-menu-heading">Interface</div>
-            <a
+            <div className="sb-sidenav-menu-heading">Quản lý Nhẫn</div>
+            <Link
+              to={"ring-management"}
               className="nav-link collapsed"
               href="#"
               data-bs-toggle="collapse"
@@ -28,11 +30,11 @@ export default function SideContent() {
               <div className="sb-nav-link-icon">
                 <i className="fas fa-columns"></i>
               </div>
-              Layouts
+              Nhẫn
               <div className="sb-sidenav-collapse-arrow">
                 <i className="fas fa-angle-down"></i>
               </div>
-            </a>
+            </Link>
             <div
               className="collapse"
               id="collapseLayouts"

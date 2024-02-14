@@ -3,16 +3,16 @@ import React from "react";
 export default function HomeAdmin() {
   return (
     <main>
-      <div class="container-fluid px-4">
-        <h1 class="mt-4">Tables</h1>
-        <ol class="breadcrumb mb-4">
-          <li class="breadcrumb-item">
+      <div className="container-fluid px-4">
+        <h1 className="mt-4">Tables</h1>
+        <ol className="breadcrumb mb-4">
+          <li className="breadcrumb-item">
             <a href="index.html">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">Tables</li>
+          <li className="breadcrumb-item active">Tables</li>
         </ol>
-        <div class="card mb-4">
-          <div class="card-body">
+        <div className="card mb-4">
+          <div className="card-body">
             DataTables is a third party plugin that is used to generate the demo
             table below. For more information about DataTables, please visit the
             <a target="_blank" href="https://datatables.net/">
@@ -21,12 +21,12 @@ export default function HomeAdmin() {
             .
           </div>
         </div>
-        <div class="card mb-4">
-          <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+        <div className="card mb-4">
+          <div className="card-header">
+            <i className="fas fa-table me-1"></i>
             DataTable Example
           </div>
-          <div class="card-body">
+          <div className="card-body">
             <table id="datatablesSimple">
               <thead>
                 <tr>

@@ -10,7 +10,9 @@ export default function AdminLayout() {
       <Navigation />
       <div id="layoutSidenav">
         <SideContent />
-        <Outlet />
+        <div className="main-content">
+          <Outlet />
+        </div>
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import HomePage from "./views/Client/HomePage/HomePage";
 import AdminLayout from "./layout/AdminLayout/AdminLayout";
 import HomeAdmin from "./views/Admin/HomeAdmin/HomeAdmin";
 import DetailProduct from "./views/Client/DetailProduct/DetailProduct";
+import RingManagement from "./views/Admin/RingManagement/RingManagement";
 
 export default function Route() {
   return useRoutes([
@@ -28,6 +29,10 @@ export default function Route() {
         {
           path: "",
           element: <HomeAdmin />,
+        },
+        {
+          path: "ring-management",
+          element: <RingManagement />,
         },
       ],
     },

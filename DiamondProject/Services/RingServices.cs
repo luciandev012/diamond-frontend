@@ -2,6 +2,7 @@
 using DiamondProject.Models.InputModel;
 using DiamondProject.Models.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace DiamondProject.Services
 {
@@ -14,7 +15,7 @@ namespace DiamondProject.Services
             _context = context;
             _imageServices = imageServices;
         }
-        public async Task<List<Ring>> GetRingsAsync() => await _context.Rings.ToListAsync();
+        public async Task<List<Ring>> GetRingsAsync() => await _context.Rings.Include(x => x.Images).ToListAsync();
 
         public async Task<Ring> CreateRingAsync(RingDTO model)
         {
@@ -38,7 +39,7 @@ namespace DiamondProject.Services
                 var image = new Image()
                 {
                     RingImageId = Guid.NewGuid(),
-                    Name = item.Name,
+                    Name = item.FileName,
                     Path = await _imageServices.SaveFileAsync(item),
                     RingId = ringId
                 };
@@ -49,10 +50,47 @@ namespace DiamondProject.Services
             await _context.SaveChangesAsync();
             return ring;
         }
+        public async Task<bool> UpdateRingAsync(Guid id, RingDTO model)
+        {
+            var ring = await _context.Rings.Where(x => x.RingId == id).Include(x => x.Images).FirstOrDefaultAsync();
+            if (ring == null)
+            {
+                return false;
+            }
+            ring.RingName = model.RingName;
+            ring.Price = model.Price;
+            ring.Quantity = model.Quantity;
+            ring.Resizable = model.Resizable;
+            ring.Size = model.Size;
+            ring.Material = model.Material;
+            ring.RingDescription = model.RingDescription;
+            ring.MadeIn = model.MadeIn;
+            ring.RingCategoryId = model.CategoryId;
+            foreach(var item in ring.Images)
+            {
+                _imageServices.DeleteImage(item.Path);
+            }
+            _context.Images.RemoveRange(ring.Images);
+            var listImage = new List<Image>();
+            foreach (var item in model.Images)
+            {
+                var image = new Image()
+                {
+                    RingImageId = Guid.NewGuid(),
+                    Name = item.FileName,
+                    Path = await _imageServices.SaveFileAsync(item),
+                    RingId = id
+                };
+                listImage.Add(image);
+            }
+            await _context.Images.AddRangeAsync(listImage);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
         public async Task DeleteRingAsync(Guid id)
         {
             var ring = await _context.Rings.Where(x => x.RingId == id).Include(x => x.Images).FirstOrDefaultAsync();
-            if(ring != null)
+            if (ring != null)
             {
                 foreach (var item in ring.Images)
                 {
@@ -61,6 +99,15 @@ namespace DiamondProject.Services
                 var result = _context.Rings.Remove(ring);
                 await _context.SaveChangesAsync();
             }
+        }
+        public async Task<Ring> GetRingByIdAsync(Guid id)
+        {
+            var ring = await _context.Rings.Where(x => x.RingId == id).Include(x => x.Images).FirstOrDefaultAsync();
+            if (ring != null)
+            {
+                return ring;
+            }
+            return null;
         }
 
     }

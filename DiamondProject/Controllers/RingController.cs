@@ -20,6 +20,18 @@ namespace DiamondProject.Controllers
 
         [HttpGet]
         public async Task<List<Ring>> GetRings() => await _ringServices.GetRingsAsync();
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRingById([FromRoute] Guid id)
+        {
+            var result = await _ringServices.GetRingByIdAsync(id);
+            if(result == null)
+            {
+                return StatusCode(204);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("ring-category")]
         public async Task<List<RingCategory>> GetRingCategories() => await _ringCategoryServices.GetRingCategoriesAsync();
         [HttpPost]
@@ -33,6 +45,17 @@ namespace DiamondProject.Controllers
         {
             await _ringCategoryServices.CreateRingCategoryAsync(model);
             return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRing([FromRoute] Guid id,[FromForm] RingDTO model)
+        {
+            var result = await _ringServices.UpdateRingAsync(id, model);
+            if (result)
+            {
+                return Ok();
+            }
+            return StatusCode(204);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRing([FromRoute]Guid id)
