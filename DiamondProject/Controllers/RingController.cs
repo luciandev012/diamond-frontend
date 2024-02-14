@@ -34,5 +34,11 @@ namespace DiamondProject.Controllers
             await _ringCategoryServices.CreateRingCategoryAsync(model);
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRing([FromRoute]Guid id)
+        {
+            await _ringServices.DeleteRingAsync(id);
+            return Ok();
+        }
     }
 }

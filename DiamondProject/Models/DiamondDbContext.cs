@@ -12,8 +12,12 @@ namespace DiamondProject.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<RingCategory>().HasMany(e => e.Rings).WithOne(e => e.Category).HasForeignKey(e => e.Id).IsRequired();
-            modelBuilder.Entity<Ring>().HasMany(e => e.Images).WithOne(e => e.Ring).HasForeignKey(e => e.Id).IsRequired();
+            modelBuilder.Entity<Ring>().ToTable("Rings").HasKey(e => e.RingId);
+            modelBuilder.Entity<RingCategory>().ToTable("RingCategories").HasKey(e => e.RingCategoryId);
+            modelBuilder.Entity<Image>().ToTable("Images").HasKey(e => e.RingImageId);
+
+            modelBuilder.Entity<RingCategory>().HasMany(e => e.Rings).WithOne(e => e.Category).HasForeignKey(e => e.RingCategoryId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Ring>().HasMany(e => e.Images).WithOne(e => e.Ring).HasForeignKey(e => e.RingId).OnDelete(DeleteBehavior.Cascade);
         }
 
         public virtual DbSet<RingCategory> RingCategories { get; set; }

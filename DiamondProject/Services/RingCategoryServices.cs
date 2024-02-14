@@ -17,7 +17,7 @@ namespace DiamondProject.Services
 
         public async Task CreateRingCategoryAsync(RingCategoryDTO model)
         {
-            var ringCategory = new RingCategory() { Name = model.Name, Id = Guid.NewGuid() };
+            var ringCategory = new RingCategory() { Name = model.Name, RingCategoryId = Guid.NewGuid() };
             await _context.RingCategories.AddAsync(ringCategory);
             var result = await _context.SaveChangesAsync();
         }

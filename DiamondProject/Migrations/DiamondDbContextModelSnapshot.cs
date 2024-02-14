@@ -24,7 +24,8 @@ namespace DiamondProject.Migrations
 
             modelBuilder.Entity("DiamondProject.Models.Model.Image", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("RingImageId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -36,17 +37,17 @@ namespace DiamondProject.Migrations
                     b.Property<Guid>("RingId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("RingImageId");
 
-                    b.ToTable("Images");
+                    b.HasIndex("RingId");
+
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("DiamondProject.Models.Model.Ring", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("RingId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MadeIn")
@@ -64,6 +65,9 @@ namespace DiamondProject.Migrations
                     b.Property<int>("Resizable")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("RingCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("RingDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -73,30 +77,32 @@ namespace DiamondProject.Migrations
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("RingId");
 
-                    b.ToTable("Rings");
+                    b.HasIndex("RingCategoryId");
+
+                    b.ToTable("Rings", (string)null);
                 });
 
             modelBuilder.Entity("DiamondProject.Models.Model.RingCategory", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("RingCategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("RingCategoryId");
 
-                    b.ToTable("RingCategories");
+                    b.ToTable("RingCategories", (string)null);
                 });
 
             modelBuilder.Entity("DiamondProject.Models.Model.Image", b =>
                 {
                     b.HasOne("DiamondProject.Models.Model.Ring", "Ring")
                         .WithMany("Images")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("RingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -107,7 +113,7 @@ namespace DiamondProject.Migrations
                 {
                     b.HasOne("DiamondProject.Models.Model.RingCategory", "Category")
                         .WithMany("Rings")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("RingCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,13 +1,18 @@
 using DiamondProject.Models;
 using DiamondProject.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews()
-    .AddJsonOptions(option => option.JsonSerializerOptions.PropertyNamingPolicy = null);
+    .AddJsonOptions(option => 
+    {
+        option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        option.JsonSerializerOptions.WriteIndented = true;
+    });
 
 builder.Services.AddDbContext<DiamondDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DiamondDbContext")));
