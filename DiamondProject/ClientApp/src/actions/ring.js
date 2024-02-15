@@ -15,3 +15,9 @@ export const deleteRing = (id) => async (dispatch) => {
     return false;
   }
 };
+
+export const addRing = (model) => async (dispatch) => {
+  const { data } = await api.addRing(model);
+  console.log(data);
+  dispatch({ type: "ADD_RING", payload: data });
+};

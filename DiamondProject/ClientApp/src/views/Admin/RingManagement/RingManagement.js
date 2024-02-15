@@ -6,6 +6,7 @@ import Loading from "../../../components/Loading/Loading";
 import { Avatar, Button } from "@mui/material";
 import { getImgUrl } from "../../../helper/helper";
 import "./ring.css";
+import AddRingDialog from "./AddRingDialog";
 
 export default function RingManagement() {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export default function RingManagement() {
   }, []);
 
   const rings = useSelector((state) => state.ring);
-  console.log(rings);
+  const [openAdd, setOpenAdd] = useState(false);
   const columns = [
     { field: "id", headerName: "ID", width: 150 },
     { field: "ringName", headerName: "Tên nhẫn", width: 200 },
@@ -82,6 +83,12 @@ export default function RingManagement() {
       alert("Xóa không thành công!");
     }
   };
+  const handleOpenAddDialog = () => {
+    setOpenAdd(true);
+  };
+  const handleCloseAddDialog = () => {
+    setOpenAdd(false);
+  };
 
   return rings.length > 0 ? (
     <>
@@ -100,6 +107,14 @@ export default function RingManagement() {
         />
       </div>
       <div className="button-action">
+        <Button
+          className="mg-right-1"
+          variant="outlined"
+          color="success"
+          onClick={() => handleOpenAddDialog()}
+        >
+          Thêm
+        </Button>
         <Button className="mg-right-1" variant="outlined" color="secondary">
           Sửa
         </Button>
@@ -112,6 +127,10 @@ export default function RingManagement() {
           Xóa
         </Button>
       </div>
+      <AddRingDialog
+        open={openAdd}
+        handleCloseAddDialog={handleCloseAddDialog}
+      />
     </>
   ) : (
     <Loading />

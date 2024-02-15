@@ -4,6 +4,8 @@ const ring = (state = [], action) => {
       return action.payload;
     case "DELETE_RING":
       return state.filter((ring) => ring.ringId !== action.payload);
+    case "ADD_RING":
+      return [...state, action.payload];
     default:
       return state;
   }
