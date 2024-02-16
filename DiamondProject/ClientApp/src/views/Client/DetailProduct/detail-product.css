@@ -2,3 +2,61 @@
   min-height: 80vh;
   padding: 2rem 0 0 2rem;
 }
+
+.grid-container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.ring-information h3 {
+  text-transform: uppercase;
+}
+.ring-button {
+  width: 100%;
+  text-transform: uppercase;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.ring-button:hover {
+  color: white !important;
+  background-color: black;
+  transition: ease-in-out 0.3s;
+}
+.quantity {
+  color: #85715d;
+  font-size: 18px;
+}
+.ring-price {
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.tax {
+  font-size: 18px;
+}
+.greeting {
+  font-weight: 300;
+  font-size: 1.2rem;
+  margin-bottom: 2rem !important;
+}
+.description {
+  font-size: 1.1rem;
+  padding-right: 2rem;
+}
+.description p {
+  text-transform: capitalize;
+}
+.right-divider {
+  border-right: 1px solid #85715d;
+}
+.detail-title {
+  color: #8e7033;
+}
+.detail-title i {
+  margin-right: 5px;
+}

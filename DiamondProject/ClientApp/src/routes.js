@@ -17,7 +17,7 @@ export default function Route() {
           element: <HomePage />,
         },
         {
-          path: "detail-product",
+          path: "detail-product/:id",
           element: <DetailProduct />,
         },
       ],

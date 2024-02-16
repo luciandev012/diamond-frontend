@@ -21,3 +21,8 @@ export const addRing = (model) => async (dispatch) => {
   console.log(data);
   dispatch({ type: "ADD_RING", payload: data });
 };
+
+export const getRing = (id) => async () => {
+  const { data } = await api.getRing(id);
+  return data;
+};

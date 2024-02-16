@@ -2,7 +2,7 @@
   max-height: 500px;
   height: 95%;
   background-color: #fff;
-  width: fit-content;
+  width: 20%;
 }
 .slider-wrapper {
   position: relative;
@@ -42,4 +42,22 @@
 }
 .slider-wrapper .slider-button#prev-slide {
   top: -40px;
+}
+
+.slider-button.material-symbols-rounded.disable {
+  opacity: 0;
+}
+.thumbnail-image {
+  display: flex;
+}
+.main-image-container {
+  width: 80%;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+}
+.main-image-container img {
+  width: 450px;
+  height: 450px;
+  transform: translateY(5%);
 }
