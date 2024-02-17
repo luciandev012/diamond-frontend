@@ -70,15 +70,6 @@ export default function DetailProduct() {
                   input={<OutlinedInput label="Cỡ" />}
                   MenuProps={MenuProps}
                 >
-                  {/* {names.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, personName, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))} */}
                   <MenuItem key={ringSize} value={ringSize}>
                     {ringSize}
                   </MenuItem>

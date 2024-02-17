@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DiamondProject.Migrations
 {
-    public partial class InitialDatabase : Migration
+    public partial class InitWithSqlite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace DiamondProject.Migrations
                 name: "RingCategories",
                 columns: table => new
                 {
-                    RingCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RingCategoryId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,16 +25,16 @@ namespace DiamondProject.Migrations
                 name: "Rings",
                 columns: table => new
                 {
-                    RingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RingName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RingDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<float>(type: "real", nullable: false),
-                    Material = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Resizable = table.Column<int>(type: "int", nullable: false),
-                    MadeIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RingCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RingId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    RingName = table.Column<string>(type: "TEXT", nullable: true),
+                    RingDescription = table.Column<string>(type: "TEXT", nullable: true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Size = table.Column<string>(type: "TEXT", nullable: true),
+                    Price = table.Column<float>(type: "REAL", nullable: false),
+                    Material = table.Column<string>(type: "TEXT", nullable: true),
+                    Resizable = table.Column<int>(type: "INTEGER", nullable: false),
+                    MadeIn = table.Column<string>(type: "TEXT", nullable: true),
+                    RingCategoryId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,10 +51,10 @@ namespace DiamondProject.Migrations
                 name: "Images",
                 columns: table => new
                 {
-                    RingImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RingImageId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Path = table.Column<string>(type: "TEXT", nullable: true),
+                    RingId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

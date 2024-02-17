@@ -21,7 +21,6 @@ export default function SideContent() {
             <Link
               to={"ring-management"}
               className="nav-link collapsed"
-              href="#"
               data-bs-toggle="collapse"
               data-bs-target="#collapseLayouts"
               aria-expanded="false"
@@ -50,9 +49,9 @@ export default function SideContent() {
                 </a>
               </nav>
             </div>
-            <a
+            <Link
+              to={"ring-category-management"}
               className="nav-link collapsed"
-              href="#"
               data-bs-toggle="collapse"
               data-bs-target="#collapsePages"
               aria-expanded="false"
@@ -61,11 +60,11 @@ export default function SideContent() {
               <div className="sb-nav-link-icon">
                 <i className="fas fa-book-open"></i>
               </div>
-              Pages
+              Loại nhẫn
               <div className="sb-sidenav-collapse-arrow">
                 <i className="fas fa-angle-down"></i>
               </div>
-            </a>
+            </Link>
             <div
               className="collapse"
               id="collapsePages"

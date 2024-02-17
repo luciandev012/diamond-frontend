@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./header.css";
+import SubMenuByCategory from "../../components/SubMenuByCategory";
+import { useDispatch, useSelector } from "react-redux";
+import { getRingCategories } from "../../actions/ring";
 
 export default function Header() {
+  const ringCategories = useSelector((state) => state.ringCategory);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRingCategories());
+  }, []);
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -79,25 +87,18 @@ export default function Header() {
             <div className="sub-menu">
               <div className="sub-menu-container">
                 <div className="sub-menu-left">
-                  <div className="sub-menu-by-type">
-                    <p className="type-row">
-                      <a className="type">BY CATEGORY</a> |
-                      <a className="view-all">View All</a>
-                    </p>
-                    <div className="sub-menu-items">
-                      <a className="sub-menu-item">Couple Rings</a>
-                      <a className="sub-menu-item">Engagement Rings</a>
-                      <a className="sub-menu-item">Women's Wedding Band</a>
-                      <a className="sub-menu-item">Men's Wedding Band</a>
-                      <a className="sub-menu-item">Diamond Gifts</a>
-                    </div>
-                  </div>
+                  {ringCategories ? (
+                    <SubMenuByCategory
+                      menu={"ring-category"}
+                      subMenu={ringCategories}
+                    />
+                  ) : null}
                   <div className="sub-menu-by-type">
                     <p className="type-row">
                       <a href="#" className="type">
                         BY COLLECTION
                       </a>{" "}
-                      |<a className="view-all">View All</a>
+                      |<a className="view-all"> View All</a>
                     </p>
                     <div className="sub-menu-items">
                       <div className="img-item">

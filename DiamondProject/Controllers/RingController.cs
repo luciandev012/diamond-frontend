@@ -43,8 +43,8 @@ namespace DiamondProject.Controllers
         [HttpPost("ring-category")]
         public async Task<IActionResult> PostRingCategory(RingCategoryDTO model)
         {
-            await _ringCategoryServices.CreateRingCategoryAsync(model);
-            return Ok();
+            var result = await _ringCategoryServices.CreateRingCategoryAsync(model);
+            return CreatedAtAction(nameof(PostRingCategory), result);
         }
 
         [HttpPut("{id}")]
@@ -61,6 +61,12 @@ namespace DiamondProject.Controllers
         public async Task<IActionResult> DeleteRing([FromRoute]Guid id)
         {
             await _ringServices.DeleteRingAsync(id);
+            return Ok();
+        }
+        [HttpDelete("ring-category/{id}")]
+        public async Task<IActionResult> DeleteRingCategory([FromRoute] Guid id)
+        {
+            await _ringCategoryServices.DeleteRingCategoryAsync(id);
             return Ok();
         }
     }

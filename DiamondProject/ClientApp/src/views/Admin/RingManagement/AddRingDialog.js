@@ -2,24 +2,24 @@ import {
   AppBar,
   Button,
   Dialog,
-  Divider,
+  FormControl,
   IconButton,
-  List,
-  ListItemButton,
-  ListItemText,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
   Select,
   Slide,
   TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addRing } from "../../../actions/ring";
-import { useDispatch } from "react-redux";
+import { addRing, getRingCategories } from "../../../actions/ring";
+import { useDispatch, useSelector } from "react-redux";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -48,7 +48,7 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
     fd.append("price", data.price);
     fd.append("material", data.material);
     fd.append("madeIn", data.madeIn);
-    fd.append("categoryId", data.categoryId);
+    fd.append("categoryId", category);
     imgs.forEach((img) => {
       fd.append("images", img);
     });
@@ -58,6 +58,12 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [imgs, setImgs] = useState([]);
+  const [category, setCategory] = useState(null);
+  const categories = useSelector((state) => state.ringCategory);
+  useEffect(() => {
+    dispatch(getRingCategories());
+    setCategory(categories[0]);
+  }, []);
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
     console.log(event.target.files[0]);
@@ -68,7 +74,9 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
     });
     setSelectedImages(imagesArray);
   };
-
+  const handleChangeCategory = (event) => {
+    setCategory(event.target.value);
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -219,13 +227,31 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
                       )}
                     </div>
                     <div className="form-group col-md-3">
-                      <TextField
-                        required
-                        id="filled-basic"
-                        label="Loại nhẫn"
-                        variant="filled"
-                        {...register("categoryId")}
-                      />
+                      <FormControl sx={{ width: "100%" }}>
+                        <InputLabel id="demo-multiple-name-label">
+                          Loại nhẫn
+                        </InputLabel>
+                        <Select
+                          labelId="demo-multiple-name-label"
+                          id="demo-multiple-name"
+                          value={category}
+                          onChange={handleChangeCategory}
+                          input={<OutlinedInput label="Loại nhẫn" />}
+                        >
+                          {categories
+                            ? categories.map((cate) => {
+                                return (
+                                  <MenuItem
+                                    key={cate.ringCategoryId}
+                                    value={cate.ringCategoryId}
+                                  >
+                                    {cate.name}
+                                  </MenuItem>
+                                );
+                              })
+                            : null}
+                        </Select>
+                      </FormControl>
                     </div>
                   </div>
                   <Button variant="contained" color="success" type="submit">

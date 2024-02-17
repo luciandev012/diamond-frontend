@@ -3,6 +3,7 @@ using System;
 using DiamondProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiamondProject.Migrations
 {
     [DbContext(typeof(DiamondDbContext))]
-    partial class DiamondDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240217093608_InitWithSqlite")]
+    partial class InitWithSqlite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.21");
@@ -83,9 +85,6 @@ namespace DiamondProject.Migrations
                 {
                     b.Property<Guid>("RingCategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

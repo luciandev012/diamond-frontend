@@ -90,7 +90,7 @@ export default function RingManagement() {
     setOpenAdd(false);
   };
 
-  return rings.length > 0 ? (
+  return rings ? (
     <>
       <h2 style={{ marginBottom: "2rem" }}>Quản lý nhẫn</h2>
       <div style={{ height: 500, margin: "0 auto" }}>

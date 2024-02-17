@@ -15,11 +15,22 @@ namespace DiamondProject.Services
 
         public async Task<List<RingCategory>> GetRingCategoriesAsync() => await _context.RingCategories.ToListAsync();
 
-        public async Task CreateRingCategoryAsync(RingCategoryDTO model)
+        public async Task<RingCategory> CreateRingCategoryAsync(RingCategoryDTO model)
         {
-            var ringCategory = new RingCategory() { Name = model.Name, RingCategoryId = Guid.NewGuid() };
+            var ringCategory = new RingCategory() { Name = model.Name, RingCategoryId = Guid.NewGuid(), Description = model.Description };
             await _context.RingCategories.AddAsync(ringCategory);
             var result = await _context.SaveChangesAsync();
+            return ringCategory;
+        }
+        public async Task<int> DeleteRingCategoryAsync(Guid id)
+        {
+            var cate = await _context.RingCategories.FindAsync(id);
+            if (cate != null)
+            {
+                _context.RingCategories.Remove(cate);
+            }
+            var res = await _context.SaveChangesAsync();
+            return res;
         }
     }
 }
