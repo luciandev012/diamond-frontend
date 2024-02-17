@@ -31,6 +31,16 @@ namespace DiamondProject.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetRingByCategory([FromBody] Guid categoryId)
+        {
+            var result = await _ringServices.GetRingsByCategory(categoryId);
+            if (result == null)
+            {
+                return StatusCode(204);
+            }
+            return Ok(result);
+        }
 
         [HttpGet("ring-category")]
         public async Task<List<RingCategory>> GetRingCategories() => await _ringCategoryServices.GetRingCategoriesAsync();
@@ -68,6 +78,16 @@ namespace DiamondProject.Controllers
         {
             await _ringCategoryServices.DeleteRingCategoryAsync(id);
             return Ok();
+        }
+        [HttpGet("ring-category/{id}")]
+        public async Task<IActionResult> GetRingCategory(Guid id)
+        {
+            var result = await _ringCategoryServices.GetRingCategoryById(id);
+            if (result == null)
+            {
+                return StatusCode(204);
+            }
+            return Ok(result);
         }
     }
 }

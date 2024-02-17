@@ -32,5 +32,10 @@ namespace DiamondProject.Services
             var res = await _context.SaveChangesAsync();
             return res;
         }
+        public async Task<RingCategory> GetRingCategoryById(Guid id)
+        {
+            var ringCategory = await _context.RingCategories.Include(x => x.Rings).Where(x => x.RingCategoryId == id).FirstOrDefaultAsync();
+            return ringCategory;
+        }
     }
 }

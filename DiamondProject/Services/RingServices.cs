@@ -110,5 +110,11 @@ namespace DiamondProject.Services
             return null;
         }
 
+        public async Task<List<Ring>> GetRingsByCategory(Guid categoryId)
+        {
+            var rings = await _context.Rings.Where(x => x.RingCategoryId == categoryId).Include(x => x.Images).ToListAsync();
+            return rings;
+        }
+
     }
 }

@@ -45,3 +45,8 @@ export const addRingCategory = (model) => async (dispatch) => {
   const { data } = await api.addRingCategory(model);
   dispatch({ type: "ADD_RING_CATEGORY", payload: data });
 };
+
+export const getRingCategory = (cateId) => async () => {
+  const { data } = await api.getRingCategory(cateId);
+  return data;
+};

@@ -10,6 +10,9 @@ export const getRing = (id) => axiosInstance.get(`/ring/${id}`);
 
 export const getRingCategories = () => axiosInstance.get("/ring/ring-category");
 
+export const getRingCategory = (id) =>
+  axiosInstance.get(`/ring/ring-category/${id}`);
+
 export const deleteCategory = (id) =>
   axiosInstance.delete(`/ring/ring-category/${id}`);
 

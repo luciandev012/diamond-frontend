@@ -6,6 +6,7 @@ import HomeAdmin from "./views/Admin/HomeAdmin/HomeAdmin";
 import DetailProduct from "./views/Client/DetailProduct/DetailProduct";
 import RingManagement from "./views/Admin/RingManagement/RingManagement";
 import RingCategoryManagement from "./views/Admin/RingManagement/RingCategoryManagement";
+import RingCategory from "./views/Client/RingCategory/RingCategory";
 
 export default function Route() {
   return useRoutes([
@@ -20,6 +21,10 @@ export default function Route() {
         {
           path: "detail-product/:id",
           element: <DetailProduct />,
+        },
+        {
+          path: "ring-category/:id",
+          element: <RingCategory />,
         },
       ],
     },
