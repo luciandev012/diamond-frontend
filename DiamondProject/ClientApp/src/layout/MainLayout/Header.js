@@ -76,7 +76,7 @@ export default function Header() {
         </div>
       </nav>
       <div className="logo-container">
-        <a className="logo-img text-logo">BULGARI</a>
+        <a className="logo-img text-logo">kim cương như an</a>
       </div>
       <div className="header-bottom">
         <ul className="header-menu">
