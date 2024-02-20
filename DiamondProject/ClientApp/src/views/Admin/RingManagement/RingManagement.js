@@ -64,7 +64,7 @@ export default function RingManagement() {
           id: ringId,
           ringName,
           image: getImgUrl(images[0].path),
-          ringDescription: ringDescription.substring(0, 100) + "...",
+          ringDescription,
           quantity,
           size,
           price,

@@ -31,16 +31,6 @@ namespace DiamondProject.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetRingByCategory([FromBody] Guid categoryId)
-        {
-            var result = await _ringServices.GetRingsByCategory(categoryId);
-            if (result == null)
-            {
-                return StatusCode(204);
-            }
-            return Ok(result);
-        }
 
         [HttpGet("ring-category")]
         public async Task<List<RingCategory>> GetRingCategories() => await _ringCategoryServices.GetRingCategoriesAsync();

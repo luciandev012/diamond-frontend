@@ -42,6 +42,7 @@ header {
 
 .logo-img {
   height: 50px;
+  width: -moz-fit-content;
   width: fit-content;
   margin: auto;
   display: block;
@@ -107,7 +108,7 @@ header {
 }
 
 .sub-menu-container {
-  width: 80%;
+  width: 70%;
   margin: auto;
   display: flex;
   height: 100%;
@@ -247,7 +248,7 @@ li.guide-item a:hover {
 .follow,
 .footer-container,
 .copy-right {
-  width: 80rem;
+  width: 70%;
   margin: 0 auto !important;
 }
 .footer-container {

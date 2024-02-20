@@ -3,6 +3,31 @@ import React from "react";
 export default function Footer() {
   return (
     <footer>
+      <div className="social-network">
+        <div className="follow">
+          <span className="social-text">Follow us</span>
+          <span className="social-icon">
+            <a href="#">
+              <i className="fa-brands fa-facebook-f"></i>
+            </a>
+          </span>
+          <span className="social-icon">
+            <a href="#">
+              <i className="fa-brands fa-instagram"></i>
+            </a>
+          </span>
+          <span className="social-icon">
+            <a href="#">
+              <i className="fa-brands fa-youtube"></i>
+            </a>
+          </span>
+          <span className="social-icon">
+            <a href="#">
+              <i className="fa-brands fa-linkedin"></i>
+            </a>
+          </span>
+        </div>
+      </div>
       <div className="row footer-container">
         <div className="col-md-3 footer-item">
           <p className="accord-title">Customer care</p>

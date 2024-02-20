@@ -76,31 +76,6 @@ export default function HomePage() {
           </Carousel>
         </div>
       </section>
-      <div className="social-network">
-        <div className="follow">
-          <span className="social-text">Follow us</span>
-          <span className="social-icon">
-            <a href="#">
-              <i className="fa-brands fa-facebook-f"></i>
-            </a>
-          </span>
-          <span className="social-icon">
-            <a href="#">
-              <i className="fa-brands fa-instagram"></i>
-            </a>
-          </span>
-          <span className="social-icon">
-            <a href="#">
-              <i className="fa-brands fa-youtube"></i>
-            </a>
-          </span>
-          <span className="social-icon">
-            <a href="#">
-              <i className="fa-brands fa-linkedin"></i>
-            </a>
-          </span>
-        </div>
-      </div>
     </>
   );
 }
