@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getRingCategory } from "../../../actions/ring";
 import Loading from "../../../components/Loading/Loading";
 import "./ring-category.css";
 import { Icon } from "@iconify/react";
 import { Checkbox } from "@mui/material";
+import { formatMoney } from "../../../helper/helper";
 
 export default function RingCategory() {
   const params = useParams();
   const dispatch = useDispatch();
   const [category, setCategory] = useState(null);
   const [toggleArrow, setToggleArrow] = useState(false);
-  const [productWidth, setProductWidth] = useState("initial");
+  const [filter, setFilter] = useState(0);
+  //const [productWidth, setProductWidth] = useState("initial");
   useEffect(() => {
     const fetchCategory = async () => {
       let temp = await dispatch(getRingCategory(params.id));
       setCategory(temp);
     };
+    // const resizeWindows = () => {
+    //   let curWidth = document.getElementById("product");
+    //   let width = curWidth.clientWidth + "px";
+    //   setProductWidth(width);
+    // };
+    // window.addEventListener("load", resizeWindows);
+    // window.addEventListener("resize", resizeWindows);
     fetchCategory();
   }, [params]);
 
@@ -25,12 +34,7 @@ export default function RingCategory() {
     setToggleArrow(!toggleArrow);
   };
   const handleChange = () => {};
-  const hover = () => {
-    let curWidth = document.getElementById("product");
-    let width = curWidth.clientWidth + "px";
-    setProductWidth(width);
-    console.log(width);
-  };
+
   return category ? (
     <section className="">
       <div className="follow">
@@ -57,13 +61,34 @@ export default function RingCategory() {
               <Icon icon="mi:filter" fontSize={25} /> Lọc:{" "}
             </span>
             <span>
-              Category <Icon icon="icons8:angle-down" fontSize={25} />
+              Category{" "}
+              <button
+                onClick={() => setFilter((prev) => (prev !== 1 ? 1 : 0))}
+                id="slideMenu"
+                className={filter === 1 ? "active" : ""}
+              >
+                <Icon icon="icons8:angle-down" fontSize={25} />
+              </button>
             </span>
             <span>
-              Material <Icon icon="icons8:angle-down" fontSize={25} />
+              Material{" "}
+              <button
+                onClick={() => setFilter((prev) => (prev !== 2 ? 2 : 0))}
+                id="slideMenu"
+                className={filter === 2 ? "active" : ""}
+              >
+                <Icon icon="icons8:angle-down" fontSize={25} />
+              </button>
             </span>
             <span>
-              Collection <Icon icon="icons8:angle-down" fontSize={25} />
+              Collection{" "}
+              <button
+                onClick={() => setFilter((prev) => (prev !== 3 ? 3 : 0))}
+                id="slideMenu"
+                className={filter === 3 ? "active" : ""}
+              >
+                <Icon icon="icons8:angle-down" fontSize={25} />
+              </button>
             </span>
           </div>
           <div className="sort">
@@ -77,7 +102,7 @@ export default function RingCategory() {
         </div>
       </div>
       <div>
-        <div className="filter-option follow">
+        <div className={`filter-option follow ${filter !== 0 ? "active" : ""}`}>
           <div className="option">
             <div className="option-item">
               <Checkbox
@@ -113,12 +138,23 @@ export default function RingCategory() {
               <img
                 src="/images/diamond_rings.png"
                 alt="img"
-                className="product-image"
-                onMouseEnter={hover}
+                className="card-product card-product-front"
+                id={ring.ringId}
               />
-              <div className="product-detail" style={{ width: productWidth }}>
-                <h5>{ring.ringName}</h5>
+              <div className="card-product card-product-back">
+                <div className="back-content">
+                  <h5>{ring.ringName}</h5>
+                  <p className="back-title">Giá</p>
+                  <p>{formatMoney(ring.price)}</p>
+                  <p className="back-title">Chất liệu</p>
+                  <p>{ring.material}</p>
+                </div>
+                <button className="discover-button">Xem chi tiết</button>
               </div>
+              <Link
+                className="absolute-link"
+                to={`/detail-product/${ring.ringId}`}
+              />
             </div>
           );
         })}
