@@ -7,6 +7,7 @@ import "./ring-category.css";
 import { Icon } from "@iconify/react";
 import { Checkbox } from "@mui/material";
 import { formatMoney } from "../../../helper/helper";
+import ListRingFilter from "./ListRingFilter";
 
 export default function RingCategory() {
   const params = useParams();
@@ -14,10 +15,23 @@ export default function RingCategory() {
   const [category, setCategory] = useState(null);
   const [toggleArrow, setToggleArrow] = useState(false);
   const [filter, setFilter] = useState(0);
+  const [madeIn, setMadeIn] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState([]);
   //const [productWidth, setProductWidth] = useState("initial");
   useEffect(() => {
     const fetchCategory = async () => {
       let temp = await dispatch(getRingCategory(params.id));
+      let madeInFlag = {};
+      temp.rings.forEach((ring) => {
+        if (madeInFlag[ring.madeIn] !== undefined) {
+          madeInFlag[ring.madeIn]++;
+        } else {
+          madeInFlag[ring.madeIn] = 1;
+        }
+      });
+      console.log(madeInFlag);
+      setMadeIn(Object.entries(madeInFlag));
+
       setCategory(temp);
     };
     // const resizeWindows = () => {
@@ -33,7 +47,9 @@ export default function RingCategory() {
   const handleClickSlideDescription = () => {
     setToggleArrow(!toggleArrow);
   };
-  const handleChange = () => {};
+  const handleCheckMadeIn = (mi) => {
+    setSelectedFilter((prev) => [...prev, mi]);
+  };
 
   return category ? (
     <section className="">
@@ -61,7 +77,7 @@ export default function RingCategory() {
               <Icon icon="mi:filter" fontSize={25} /> Lọc:{" "}
             </span>
             <span>
-              Category{" "}
+              Xuất sứ{" "}
               <button
                 onClick={() => setFilter((prev) => (prev !== 1 ? 1 : 0))}
                 id="slideMenu"
@@ -71,7 +87,7 @@ export default function RingCategory() {
               </button>
             </span>
             <span>
-              Material{" "}
+              Chất liệu{" "}
               <button
                 onClick={() => setFilter((prev) => (prev !== 2 ? 2 : 0))}
                 id="slideMenu"
@@ -81,7 +97,7 @@ export default function RingCategory() {
               </button>
             </span>
             <span>
-              Collection{" "}
+              Bộ sưu tập{" "}
               <button
                 onClick={() => setFilter((prev) => (prev !== 3 ? 3 : 0))}
                 id="slideMenu"
@@ -104,60 +120,33 @@ export default function RingCategory() {
       <div>
         <div className={`filter-option follow ${filter !== 0 ? "active" : ""}`}>
           <div className="option">
-            <div className="option-item">
-              <Checkbox
-                checked={false}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />{" "}
-              Plantinum
-            </div>
-            <div className="option-item">
-              <Checkbox
-                checked={false}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />{" "}
-              Gold
-            </div>
-            <div className="option-item">
-              <Checkbox
-                checked={false}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />{" "}
-              Silver
-            </div>
+            {selectedFilter.length > 0
+              ? selectedFilter.map((select, index) => {
+                  return (
+                    <span className="selected-filter" key={index}>
+                      <button>✖️</button>&nbsp;{select[0]}
+                    </span>
+                  );
+                })
+              : madeIn
+              ? madeIn.map((mi, index) => {
+                  return (
+                    <div key={index} className="option-item">
+                      <Checkbox
+                        checked={false}
+                        onChange={() => handleCheckMadeIn(mi)}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />{" "}
+                      {`${mi[0]} (${mi[1]})`}
+                    </div>
+                  );
+                })
+              : null}
           </div>
         </div>
       </div>
       <div className="follow list-product row">
-        {category.rings.map((ring) => {
-          return (
-            <div className="col-md-3 product" id="product" key={ring.ringId}>
-              <img
-                src="/images/diamond_rings.png"
-                alt="img"
-                className="card-product card-product-front"
-                id={ring.ringId}
-              />
-              <div className="card-product card-product-back">
-                <div className="back-content">
-                  <h5>{ring.ringName}</h5>
-                  <p className="back-title">Giá</p>
-                  <p>{formatMoney(ring.price)}</p>
-                  <p className="back-title">Chất liệu</p>
-                  <p>{ring.material}</p>
-                </div>
-                <button className="discover-button">Xem chi tiết</button>
-              </div>
-              <Link
-                className="absolute-link"
-                to={`/detail-product/${ring.ringId}`}
-              />
-            </div>
-          );
-        })}
+        <ListRingFilter rings={category.rings} />
       </div>
     </section>
   ) : (
