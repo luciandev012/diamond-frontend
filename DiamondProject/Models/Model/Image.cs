@@ -11,5 +11,6 @@ namespace DiamondProject.Models.Model
         //relationship
         public Guid RingId { get; set; }
         public Ring Ring { get; set; }
+
     }
 }
