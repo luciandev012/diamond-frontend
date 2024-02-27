@@ -22,9 +22,9 @@ namespace DiamondProject.Controllers
         public async Task<List<Ring>> GetRings() => await _ringServices.GetRingsAsync();
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRingById([FromRoute] Guid id)
+        public async Task<IActionResult> GetRingByPathName([FromRoute] string id)
         {
-            var result = await _ringServices.GetRingByIdAsync(id);
+            var result = await _ringServices.GetRingByPathNameAsync(id);
             if(result == null)
             {
                 return StatusCode(204);
@@ -70,9 +70,19 @@ namespace DiamondProject.Controllers
             return Ok();
         }
         [HttpGet("ring-category/{id}")]
-        public async Task<IActionResult> GetRingCategory(Guid id)
+        public async Task<IActionResult> GetRingCategory(string id)
         {
-            var result = await _ringCategoryServices.GetRingCategoryById(id);
+            var result = await _ringCategoryServices.GetRingCategoryByPathName(id);
+            if (result == null)
+            {
+                return StatusCode(204);
+            }
+            return Ok(result);
+        }
+        [HttpPut("ring-category/{id}")]
+        public async Task<IActionResult> UpdateRingCategory([FromRoute] Guid id, [FromBody] RingCategoryDTO model)
+        {
+            var result = await _ringCategoryServices.UpdateRingCategoryAsync(id, model);
             if (result == null)
             {
                 return StatusCode(204);

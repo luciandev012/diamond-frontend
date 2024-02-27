@@ -25,7 +25,7 @@ export default function ListRingFilter({ rings }) {
             </div>
             <Link
               className="absolute-link"
-              to={`/detail-product/${ring.ringId}`}
+              to={`/detail-product/${ring.pathName}`}
             />
           </div>
         );

@@ -1,4 +1,5 @@
-﻿using DiamondProject.Models;
+﻿using DiamondProject.Common;
+using DiamondProject.Models;
 using DiamondProject.Models.InputModel;
 using DiamondProject.Models.Model;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,8 @@ namespace DiamondProject.Services
                 Material = model.Material,
                 RingDescription = model.RingDescription,
                 MadeIn = model.MadeIn,
-                RingCategoryId = model.CategoryId
+                RingCategoryId = model.CategoryId,
+                PathName = Helper.GetPathName(model.RingName)
             };
             var listImage = new List<Image>();
             foreach (var item in model.Images)
@@ -66,6 +68,7 @@ namespace DiamondProject.Services
             ring.RingDescription = model.RingDescription;
             ring.MadeIn = model.MadeIn;
             ring.RingCategoryId = model.CategoryId;
+            ring.PathName = Helper.GetPathName(model.RingName);
             foreach(var item in ring.Images)
             {
                 _imageServices.DeleteImage(item.Path);
@@ -100,9 +103,9 @@ namespace DiamondProject.Services
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<Ring> GetRingByIdAsync(Guid id)
+        public async Task<Ring> GetRingByPathNameAsync(string pathName)
         {
-            var ring = await _context.Rings.Where(x => x.RingId == id).Include(x => x.Images).FirstOrDefaultAsync();
+            var ring = await _context.Rings.Where(x => x.PathName == pathName).Include(x => x.Images).FirstOrDefaultAsync();
             if (ring != null)
             {
                 return ring;
@@ -110,10 +113,15 @@ namespace DiamondProject.Services
             return null;
         }
 
-        public async Task<List<Ring>> GetRingsByCategory(Guid categoryId)
+        public async Task<List<Ring>> GetRingsByCategory(string pathName)
         {
-            var rings = await _context.Rings.Where(x => x.RingCategoryId == categoryId).Include(x => x.Images).ToListAsync();
-            return rings;
+            var category = await _context.RingCategories.Where(x => x.PathName == pathName).FirstOrDefaultAsync();
+            if(category != null)
+            {
+                var rings = await _context.Rings.Where(x => x.RingCategoryId == category.RingCategoryId).Include(x => x.Images).ToListAsync();
+                return rings;
+            }
+            return null;
         }
 
     }

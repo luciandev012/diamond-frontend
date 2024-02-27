@@ -1,4 +1,5 @@
-﻿using DiamondProject.Models;
+﻿using DiamondProject.Common;
+using DiamondProject.Models;
 using DiamondProject.Models.InputModel;
 using DiamondProject.Models.Model;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace DiamondProject.Services
 
         public async Task<RingCategory> CreateRingCategoryAsync(RingCategoryDTO model)
         {
-            var ringCategory = new RingCategory() { Name = model.Name, RingCategoryId = Guid.NewGuid(), Description = model.Description };
+            var ringCategory = new RingCategory() { Name = model.Name, RingCategoryId = Guid.NewGuid(), Description = model.Description, PathName = Helper.GetPathName(model.Name) };
             await _context.RingCategories.AddAsync(ringCategory);
             var result = await _context.SaveChangesAsync();
             return ringCategory;
@@ -32,10 +33,23 @@ namespace DiamondProject.Services
             var res = await _context.SaveChangesAsync();
             return res;
         }
-        public async Task<RingCategory> GetRingCategoryById(Guid id)
+        public async Task<RingCategory> GetRingCategoryByPathName(string pathName)
         {
-            var ringCategory = await _context.RingCategories.Include(x => x.Rings).Where(x => x.RingCategoryId == id).FirstOrDefaultAsync();
+            var ringCategory = await _context.RingCategories.Include(x => x.Rings).Where(x => x.PathName == pathName).FirstOrDefaultAsync();
             return ringCategory;
+        }
+        public async Task<RingCategory> UpdateRingCategoryAsync(Guid id, RingCategoryDTO model)
+        {
+            var ringCategory = await _context.RingCategories.FindAsync(id);
+            if (ringCategory != null)
+            {
+                ringCategory.Name = model.Name;
+                ringCategory.Description = model.Description;
+                ringCategory.PathName = Helper.GetPathName(model.Name);
+                await _context.SaveChangesAsync();
+                return ringCategory;
+            }
+            return null;
         }
     }
 }

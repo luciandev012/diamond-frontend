@@ -19,6 +19,7 @@ namespace DiamondProject.Models.Model
         public Guid RingCategoryId { get; set; }
 
         public ICollection<Image> Images { get; } = new List<Image>();
+        public string PathName { get; set; }
 
     }
 }

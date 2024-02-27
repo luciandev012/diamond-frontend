@@ -80,10 +80,8 @@ export default function Header() {
       </div>
       <div className="header-bottom">
         <ul className="header-menu">
-          <li className="menu-item">high jewelry</li>
-          <li className="menu-item">jewelry</li>
           <li className="menu-item">
-            engagement & wedding
+            nhẫn tự chế tác
             <div className="sub-menu">
               <div className="sub-menu-container">
                 <div className="sub-menu-left">
@@ -96,9 +94,9 @@ export default function Header() {
                   <div className="sub-menu-by-type">
                     <p className="type-row">
                       <a href="#" className="type">
-                        BY COLLECTION
+                        Theo bộ sưu tập
                       </a>{" "}
-                      |<a className="view-all"> View All</a>
+                      |<a className="view-all"> XEM TẤT CẢ</a>
                     </p>
                     <div className="sub-menu-items">
                       <div className="img-item">
@@ -169,11 +167,11 @@ export default function Header() {
               </div>
             </div>
           </li>
-          <li className="menu-item">watches</li>
-          <li className="menu-item">bags and accessories</li>
-          <li className="menu-item">fragrances</li>
-          <li className="menu-item">gifts</li>
-          <li className="menu-item">the maison</li>
+          <li className="menu-item">Nhẫn hãng</li>
+          <li className="menu-item">Lắc tay</li>
+          <li className="menu-item">dây chuyền</li>
+          <li className="menu-item">Khuyên tai</li>
+          <li className="menu-item">chế độ thu đổi</li>
         </ul>
       </div>
     </header>

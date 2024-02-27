@@ -206,7 +206,7 @@ li.guide-item a:hover {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  max-width: 550px;
+  max-width: 35rem;
 }
 .text-content h1 {
   text-transform: uppercase;
