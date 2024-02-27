@@ -17,6 +17,57 @@ export default function SideContent() {
               </div>
               Dashboard
             </a>
+            <div className="sb-sidenav-menu-heading">
+              Quản lý Nhẫn chechchchchchchsae
+            </div>
+            <Link
+              to={"ring-management"}
+              className="nav-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+            >
+              <div className="sb-nav-link-icon">
+                <i className="fas fa-columns"></i>
+              </div>
+              Nhẫn
+              <div className="sb-sidenav-collapse-arrow">
+                <i className="fas fa-angle-down"></i>
+              </div>
+            </Link>
+            <div
+              className="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav className="sb-sidenav-menu-nested nav">
+                <a className="nav-link" href="layout-static.html">
+                  Static Navigation
+                </a>
+                <a className="nav-link" href="layout-sidenav-light.html">
+                  Light Sidenav
+                </a>
+              </nav>
+            </div>
+            <Link
+              to={"ring-category-management"}
+              className="nav-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapsePages"
+              aria-expanded="false"
+              aria-controls="collapsePages"
+            >
+              <div className="sb-nav-link-icon">
+                <i className="fas fa-book-open"></i>
+              </div>
+              Loại nhẫn
+              <div className="sb-sidenav-collapse-arrow">
+                <i className="fas fa-angle-down"></i>
+              </div>
+            </Link>
+
             <div className="sb-sidenav-menu-heading">Quản lý Nhẫn</div>
             <Link
               to={"ring-management"}

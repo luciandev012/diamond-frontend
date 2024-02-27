@@ -1,3 +1,12 @@
+:root {
+  --category-square: 300px;
+}
+@media screen and (min-width: 1200px) {
+  :root {
+    --category-square: 225px;
+  }
+}
+
 .bread-crumb {
   width: -moz-fit-content;
   width: fit-content;
@@ -86,7 +95,7 @@ span#arrow {
 .product {
   position: relative;
   padding: 15px !important;
-  height: 300px;
+  height: var(--category-square);
   margin-bottom: 2rem;
 }
 
@@ -99,8 +108,8 @@ span#arrow {
   backface-visibility: hidden;
   overflow: hidden;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
-  width: 300px;
-  height: 300px;
+  width: var(--category-square);
+  height: var(--category-square);
   background-color: #f6f5f3;
   display: flex;
   justify-content: space-between;

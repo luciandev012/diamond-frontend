@@ -7,6 +7,7 @@ import DetailProduct from "./views/Client/DetailProduct/DetailProduct";
 import RingManagement from "./views/Admin/RingManagement/RingManagement";
 import RingCategoryManagement from "./views/Admin/RingManagement/RingCategoryManagement";
 import RingCategory from "./views/Client/RingCategory/RingCategory";
+import BrandManagement from "./views/Admin/RingBrandManagement/BrandManagement";
 
 export default function Route() {
   return useRoutes([
@@ -43,6 +44,10 @@ export default function Route() {
         {
           path: "ring-category-management",
           element: <RingCategoryManagement />,
+        },
+        {
+          path: "brand-management",
+          element: <BrandManagement />,
         },
       ],
     },

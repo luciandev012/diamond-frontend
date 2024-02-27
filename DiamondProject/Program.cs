@@ -31,6 +31,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<RingCategoryServices>();
 builder.Services.AddTransient<RingServices>();
 builder.Services.AddTransient<ImageServices>();
+builder.Services.AddTransient<RingBrandServices>();
 
 var app = builder.Build();
 
