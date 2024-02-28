@@ -17,9 +17,7 @@ export default function SideContent() {
               </div>
               Dashboard
             </a>
-            <div className="sb-sidenav-menu-heading">
-              Quản lý Nhẫn chechchchchchchsae
-            </div>
+            <div className="sb-sidenav-menu-heading">Quản lý Nhẫn chế tác</div>
             <Link
               to={"ring-management"}
               className="nav-link collapsed"
@@ -68,7 +66,7 @@ export default function SideContent() {
               </div>
             </Link>
 
-            <div className="sb-sidenav-menu-heading">Quản lý Nhẫn</div>
+            <div className="sb-sidenav-menu-heading">Quản lý Nhẫn hãng</div>
             <Link
               to={"ring-management"}
               className="nav-link collapsed"
@@ -101,7 +99,7 @@ export default function SideContent() {
               </nav>
             </div>
             <Link
-              to={"ring-category-management"}
+              to={"brand-management"}
               className="nav-link collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#collapsePages"
@@ -111,7 +109,7 @@ export default function SideContent() {
               <div className="sb-nav-link-icon">
                 <i className="fas fa-book-open"></i>
               </div>
-              Loại nhẫn
+              Hãng
               <div className="sb-sidenav-collapse-arrow">
                 <i className="fas fa-angle-down"></i>
               </div>
