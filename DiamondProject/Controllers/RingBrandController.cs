@@ -25,6 +25,13 @@ namespace DiamondProject.Controllers
 			var res = await _ringBrandServices.CreateBrandAsync(model);
 			return Ok(res);
 		}
+		[HttpDelete("brand/{id}")]
+		public async Task<IActionResult> DeleteBrandASync([FromRoute] Guid id)
+		{
+			var res = await _ringBrandServices.DeleteBrandAsync(id);
+			return Ok();
+
+		}
 	}
 }
 
