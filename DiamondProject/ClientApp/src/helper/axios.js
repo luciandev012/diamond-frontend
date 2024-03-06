@@ -1,11 +1,18 @@
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
-const token = window.localStorage.getItem("token");
+const BASE_URL = "https://localhost:7022/api/";
+
 const axiosInstance = axios.create({
-  baseURL: "https://localhost:7022/api/",
+  baseURL: BASE_URL,
+});
+
+export const axiosPrivate = axios.create({
+  baseURL: BASE_URL,
   headers: {
-    Authorization: token ? `Bearer ${token}` : "",
+    "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 export default axiosInstance;

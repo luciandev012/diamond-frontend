@@ -8,6 +8,7 @@ import RingManagement from "./views/Admin/RingManagement/RingManagement";
 import RingCategoryManagement from "./views/Admin/RingManagement/RingCategoryManagement";
 import RingCategory from "./views/Client/RingCategory/RingCategory";
 import BrandManagement from "./views/Admin/RingBrandManagement/BrandManagement";
+import Login from "./views/Admin/User/Login";
 
 export default function Route() {
   return useRoutes([
@@ -34,7 +35,7 @@ export default function Route() {
       element: <AdminLayout />,
       children: [
         {
-          path: "",
+          path: "home",
           element: <HomeAdmin />,
         },
         {
@@ -50,6 +51,10 @@ export default function Route() {
           element: <BrandManagement />,
         },
       ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
     },
   ]);
 }

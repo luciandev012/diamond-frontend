@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "@reduxjs/toolkit";
 import allReducers from "./reducers";
 import { thunk } from "redux-thunk";
+import { AuthProvider } from "./context/AuthProvider";
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");
@@ -17,9 +18,11 @@ const store = createStore(allReducers, applyMiddleware(thunk));
 
 root.render(
   <BrowserRouter basename={baseUrl}>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </AuthProvider>
   </BrowserRouter>
 );
 
