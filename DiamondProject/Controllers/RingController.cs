@@ -1,12 +1,14 @@
 ﻿using DiamondProject.Models.InputModel;
 using DiamondProject.Models.Model;
 using DiamondProject.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RingController : ControllerBase
     {
         private readonly RingServices _ringServices;

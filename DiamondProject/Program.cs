@@ -1,6 +1,9 @@
 using DiamondProject.Models;
 using DiamondProject.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,10 +31,24 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Key").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
 builder.Services.AddTransient<RingCategoryServices>();
 builder.Services.AddTransient<RingServices>();
 builder.Services.AddTransient<ImageServices>();
 builder.Services.AddTransient<RingBrandServices>();
+builder.Services.AddTransient<UserServices>();
 
 var app = builder.Build();
 
@@ -49,11 +66,16 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
+
 app.UseCors("myCORS");
+
 app.UseStaticFiles();
-app.UseAuthorization();
+
+app.UseAuthentication();
+
 app.UseRouting();
 
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
