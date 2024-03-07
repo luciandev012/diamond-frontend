@@ -1,5 +1,4 @@
 import axios from "axios";
-import useAuth from "../hooks/useAuth";
 
 const BASE_URL = "https://localhost:7022/api/";
 

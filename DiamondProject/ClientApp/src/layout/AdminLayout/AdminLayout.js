@@ -3,12 +3,12 @@ import Navigation from "./Navigation";
 import SideContent from "./SideContent";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import "./admin.css";
-import useAuth from "../../hooks/useAuth";
 
 export default function AdminLayout() {
-  const { auth } = useAuth();
   const location = useLocation();
-  return auth?.accessToken ? (
+  const accessToken = window.localStorage.getItem("accessToken");
+
+  return accessToken ? (
     <>
       <Navigation />
       <div id="layoutSidenav">

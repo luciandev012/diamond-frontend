@@ -61,7 +61,7 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
   const [category, setCategory] = useState(null);
   const categories = useSelector((state) => state.ringCategory);
   useEffect(() => {
-    dispatch(getRingCategories());
+    //dispatch(getRingCategories());
     setCategory(categories[0]);
   }, []);
   const onSelectFile = (event) => {

@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import axiosInstance from "../../../helper/axios";
 import useAuth from "../../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../../actions/user";
 
 export default function Login() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const from = location.state?.from?.pathname || "/admin/home";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axiosInstance.post("/user/login", {
-        username,
-        password,
-      });
-      setAuth({ accessToken: data });
+    const res = await dispatch(login(username, password));
+    if (res) {
       navigate(from, { replace: true });
-    } catch (error) {
-      alert("Sai tên đăng nhập hoặc mật khẩu");
+    } else {
+      alert("Sai tên đăng nhập hoặc mật khẩu!");
     }
   };
   return (

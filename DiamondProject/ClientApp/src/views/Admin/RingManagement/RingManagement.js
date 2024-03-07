@@ -7,11 +7,18 @@ import { Avatar, Button } from "@mui/material";
 import { getImgUrl } from "../../../helper/helper";
 import "./ring.css";
 import AddRingDialog from "./AddRingDialog";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 export default function RingManagement() {
   const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
   useEffect(() => {
-    dispatch(getRings());
+    //dispatch(getRings());
+    const fetchRings = async () => {
+      const data = await axiosPrivate.get("/ring");
+      console.log(data);
+    };
+    fetchRings();
   }, []);
 
   const rings = useSelector((state) => state.ring);
