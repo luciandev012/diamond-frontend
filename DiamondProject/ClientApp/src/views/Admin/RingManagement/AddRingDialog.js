@@ -18,7 +18,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addRing, getRingCategories } from "../../../actions/ring";
+import { getRingCategories } from "../../../actions/ring";
 import { useDispatch, useSelector } from "react-redux";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
@@ -26,7 +26,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const schema = yup.object({});
+const schema = yup.object({
+  ringName: yup.string().required("Tên nhẫn không được để trống"),
+  quantity: yup
+    .number()
+    .typeError("Số lượng phải là số nguyên")
+    .integer("Số lượng phải là số nguyên")
+    .min(1, "Tối thiểu 1 chiếc")
+    .required("Số lượng không được để trống"),
+  price: yup
+    .number()
+    .typeError("Giá phải là số nguyên")
+    .integer()
+    .min(1000000, "Tối thiểu 1 triệu")
+    .required("Giá không được để trống"),
+});
 
 export default function AddRingDialog({ open, handleCloseAddDialog }) {
   const {
@@ -142,7 +156,7 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
                       fullWidth
                       {...register("ringName")}
                     />
-                    {errors.quantity && (
+                    {errors.ringName && (
                       <span className="error-message" role="alert">
                         {errors.ringName?.message}
                       </span>
