@@ -21,9 +21,11 @@ namespace DiamondProject.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<List<Ring>> GetRings() => await _ringServices.GetRingsAsync();
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRingByPathName([FromRoute] string id)
         {
             var result = await _ringServices.GetRingByPathNameAsync(id);
@@ -35,6 +37,7 @@ namespace DiamondProject.Controllers
         }
 
         [HttpGet("ring-category")]
+        [AllowAnonymous]
         public async Task<List<RingCategory>> GetRingCategories() => await _ringCategoryServices.GetRingCategoriesAsync();
         [HttpPost]
         public async Task<IActionResult> PostRing([FromForm]RingDTO model)
@@ -72,6 +75,7 @@ namespace DiamondProject.Controllers
             return Ok();
         }
         [HttpGet("ring-category/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRingCategory(string id)
         {
             var result = await _ringCategoryServices.GetRingCategoryByPathName(id);

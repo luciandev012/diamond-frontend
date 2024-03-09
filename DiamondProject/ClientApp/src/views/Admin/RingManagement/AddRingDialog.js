@@ -20,6 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addRing, getRingCategories } from "../../../actions/ring";
 import { useDispatch, useSelector } from "react-redux";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -36,8 +37,15 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [imgs, setImgs] = useState([]);
+  const [category, setCategory] = useState(null);
+  const categories = useSelector((state) => state.ringCategory);
+
+  const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
-  const submitForm = (data, e) => {
+  const submitForm = async (data, e) => {
     e.preventDefault();
     const fd = new FormData();
     fd.append("ringName", data.ringName);
@@ -52,18 +60,34 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
     imgs.forEach((img) => {
       fd.append("images", img);
     });
-    dispatch(addRing(fd));
-    handleCloseAddDialog();
+    try {
+      const response = await axiosPrivate.post("/ring", fd);
+      dispatch(addRingAction(response.data));
+      handleCloseAddDialog();
+    } catch (error) {
+      console.log(error);
+      alert("Them khong thanh cong!");
+    }
+    // const res = await dispatch(addRing(fd));
+    // if (res) {
+    //   handleCloseAddDialog();
+    // } else {
+
+    // }
+  };
+  const addRingAction = (data) => async (dispatch) => {
+    dispatch({ type: "ADD_RING", payload: data });
   };
 
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [imgs, setImgs] = useState([]);
-  const [category, setCategory] = useState(null);
-  const categories = useSelector((state) => state.ringCategory);
   useEffect(() => {
-    //dispatch(getRingCategories());
-    setCategory(categories[0]);
+    dispatch(getRingCategories());
   }, []);
+
+  useEffect(() => {
+    setCategory(categories[0]?.ringCategoryId);
+    //console.log(categories[0]);
+  }, [categories]);
+
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
     console.log(event.target.files[0]);

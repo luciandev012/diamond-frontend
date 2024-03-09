@@ -1,4 +1,5 @@
 import * as api from "../apis/ring";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export const getRings = () => async (dispatch) => {
   const { data } = await api.getRings();
@@ -16,10 +17,17 @@ export const deleteRing = (id) => async (dispatch) => {
   }
 };
 
-export const addRing = (model) => async (dispatch) => {
-  const { data } = await api.addRing(model);
-  dispatch({ type: "ADD_RING", payload: data });
-};
+// export const addRing = (model) => async (dispatch) => {
+//   const axiosPrivate = useAxiosPrivate();
+//   try {
+//     const { data } = await axiosPrivate.post("/ring", model);
+//     dispatch({ type: "ADD_RING", payload: data });
+//     return true;
+//   } catch (error) {
+//     console.log(error);
+//     return false;
+//   }
+// };
 
 export const getRing = (id) => async () => {
   const { data } = await api.getRing(id);

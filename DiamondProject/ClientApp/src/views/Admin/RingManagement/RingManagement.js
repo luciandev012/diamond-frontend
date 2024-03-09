@@ -13,12 +13,7 @@ export default function RingManagement() {
   const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
   useEffect(() => {
-    //dispatch(getRings());
-    const fetchRings = async () => {
-      const data = await axiosPrivate.get("/ring");
-      console.log(data);
-    };
-    fetchRings();
+    dispatch(getRings());
   }, []);
 
   const rings = useSelector((state) => state.ring);
@@ -85,8 +80,14 @@ export default function RingManagement() {
     setSelectedRing(params.row);
   };
   const handleDeleteRing = async () => {
-    let res = await dispatch(deleteRing(selectedRing.id));
-    if (!res) {
+    try {
+      const { status } = await axiosPrivate.delete(`/ring/${selectedRing.id}`);
+      if (status === 200) {
+        dispatch((dis) =>
+          dis({ type: "DELETE_RING", payload: selectedRing.id })
+        );
+      }
+    } catch (error) {
       alert("Xóa không thành công!");
     }
   };
