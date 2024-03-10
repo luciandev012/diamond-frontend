@@ -42,11 +42,16 @@ const schema = yup.object({
     .required("Giá không được để trống"),
 });
 
-export default function AddRingDialog({ open, handleCloseAddDialog }) {
+export default function UpdateRingDialog({
+  open,
+  handleCloseUpdateDialog,
+  ringId,
+}) {
   const {
     register,
     handleSubmit,
     resetField,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -55,10 +60,46 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [imgs, setImgs] = useState([]);
   const [category, setCategory] = useState(null);
-  const categories = useSelector((state) => state.ringCategory);
+  const [ring, setRing] = useState(null);
+  const [ringName, setRingName] = useState(null);
 
+  const categories = useSelector((state) => state.ringCategory);
+  const rings = useSelector((state) => state.ring);
   const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRingCategories());
+    setRing(rings?.filter((ring) => ring.ringId === ringId)[0]);
+    //console.log(ring);
+    open ? setInput() : resetInput();
+  }, [open, rings, ringId]);
+
+  useEffect(() => {
+    setRingName(ring?.ringName);
+  }, [ring]);
+
+  const resetInput = () => {
+    resetField("price", "");
+    resetField("ringName", "");
+    resetField("ringDescription", "");
+    resetField("quantity", "");
+    resetField("size", "");
+    resetField("resizable", "");
+    resetField("material", "");
+    resetField("madeIn", "");
+  };
+  const setInput = () => {
+    setValue("price", ring?.price);
+    setValue("ringName", ring?.ringName);
+    setValue("ringDescription", ring?.ringDescription);
+    setValue("quantity", ring?.quantity);
+    setValue("size", ring?.size);
+    setValue("resizable", ring?.resizable);
+    setValue("material", ring?.material);
+    setValue("madeIn", ring?.madeIn);
+  };
+
   const submitForm = async (data, e) => {
     e.preventDefault();
     const fd = new FormData();
@@ -74,13 +115,14 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
     imgs.forEach((img) => {
       fd.append("images", img);
     });
+    console.log(data);
     try {
-      const response = await axiosPrivate.post("/ring", fd);
-      dispatch(addRingAction(response.data));
-      handleCloseAddDialog();
+      const response = await axiosPrivate.put(`/ring/${ringId}`, fd);
+      dispatch(updateRingAction(response.data));
+      //handleCloseAddDialog();
     } catch (error) {
       console.log(error);
-      alert("Them khong thanh cong!");
+      alert("Sửa không thành công!");
     }
     // const res = await dispatch(addRing(fd));
     // if (res) {
@@ -89,17 +131,12 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
 
     // }
   };
-  const addRingAction = (data) => async (dispatch) => {
-    dispatch({ type: "ADD_RING", payload: data });
+  const updateRingAction = (data) => async (dispatch) => {
+    dispatch({ type: "UPDATE_RING", payload: data });
   };
 
   useEffect(() => {
-    dispatch(getRingCategories());
-  }, []);
-
-  useEffect(() => {
-    setCategory(categories[0]?.ringCategoryId);
-    //console.log(categories[0]);
+    setCategory(ring?.ringCategoryId);
   }, [categories]);
 
   const onSelectFile = (event) => {
@@ -119,7 +156,7 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
       <Dialog
         fullScreen
         open={open}
-        onClose={handleCloseAddDialog}
+        onClose={handleCloseUpdateDialog}
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: "relative" }}>
@@ -127,13 +164,13 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleCloseAddDialog}
+              onClick={handleCloseUpdateDialog}
               aria-label="close"
             >
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Thêm nhẫn
+              Sửa nhẫn
             </Typography>
           </Toolbar>
         </AppBar>
@@ -155,6 +192,14 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
                       fullWidth
                       {...register("ringName")}
                     />
+                    {/* <input
+                      type="text"
+                      name="ringName"
+                      id="ringName"
+                      value={ringName}
+                      {...register("ringName")}
+                      onChange={(e) => setRingName(e.target.value)}
+                    /> */}
                     {errors.ringName && (
                       <span className="error-message" role="alert">
                         {errors.ringName?.message}

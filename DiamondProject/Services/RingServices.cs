@@ -124,5 +124,6 @@ namespace DiamondProject.Services
             return null;
         }
 
+        public async Task<Ring> GetRingByIdAsync(Guid id) => await _context.Rings.Include(x => x.Images).Where(x => x.RingId == id).FirstOrDefaultAsync();
     }
 }

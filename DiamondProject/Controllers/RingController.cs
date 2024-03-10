@@ -35,6 +35,16 @@ namespace DiamondProject.Controllers
             }
             return Ok(result);
         }
+        [HttpGet("guid/{id}")]
+        public async Task<IActionResult> GetRingById([FromRoute] Guid id)
+        {
+            var result = await _ringServices.GetRingByIdAsync(id);
+            if(result == null)
+            {
+                return StatusCode(204);
+            }
+            return Ok(result);
+        }
 
         [HttpGet("ring-category")]
         [AllowAnonymous]

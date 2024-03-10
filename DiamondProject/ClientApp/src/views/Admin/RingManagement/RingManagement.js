@@ -8,6 +8,7 @@ import { getImgUrl } from "../../../helper/helper";
 import "./ring.css";
 import AddRingDialog from "./AddRingDialog";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import UpdateRingDialog from "./UpdateRingDialog";
 
 export default function RingManagement() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function RingManagement() {
 
   const rings = useSelector((state) => state.ring);
   const [openAdd, setOpenAdd] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
   const columns = [
     { field: "id", headerName: "ID", width: 150 },
     { field: "ringName", headerName: "Tên nhẫn", width: 200 },
@@ -77,15 +79,13 @@ export default function RingManagement() {
 
   const [selectedRing, setSelectedRing] = useState(null);
   const handleSelected = (params) => {
-    setSelectedRing(params.row);
+    setSelectedRing(params.row.id);
   };
   const handleDeleteRing = async () => {
     try {
-      const { status } = await axiosPrivate.delete(`/ring/${selectedRing.id}`);
+      const { status } = await axiosPrivate.delete(`/ring/${selectedRing}`);
       if (status === 200) {
-        dispatch((dis) =>
-          dis({ type: "DELETE_RING", payload: selectedRing.id })
-        );
+        dispatch((dis) => dis({ type: "DELETE_RING", payload: selectedRing }));
       }
     } catch (error) {
       alert("Xóa không thành công!");
@@ -96,6 +96,13 @@ export default function RingManagement() {
   };
   const handleCloseAddDialog = () => {
     setOpenAdd(false);
+  };
+
+  const handleClickUpdateRing = () => {
+    selectedRing ? setOpenUpdate(true) : alert("Chưa chọn nhẫn để sửa");
+  };
+  const handleCloseUpdateDialog = () => {
+    setOpenUpdate(false);
   };
 
   return rings ? (
@@ -123,7 +130,12 @@ export default function RingManagement() {
         >
           Thêm
         </Button>
-        <Button className="mg-right-1" variant="outlined" color="secondary">
+        <Button
+          className="mg-right-1"
+          variant="outlined"
+          color="secondary"
+          onClick={() => handleClickUpdateRing()}
+        >
           Sửa
         </Button>
         <Button
@@ -139,6 +151,13 @@ export default function RingManagement() {
         open={openAdd}
         handleCloseAddDialog={handleCloseAddDialog}
       />
+      {selectedRing && (
+        <UpdateRingDialog
+          open={openUpdate}
+          handleCloseUpdateDialog={handleCloseUpdateDialog}
+          ringId={selectedRing}
+        />
+      )}
     </>
   ) : (
     <Loading />
