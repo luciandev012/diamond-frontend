@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   AppBar,
   Button,
@@ -9,41 +10,74 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addRingCategory } from "../../../actions/ring";
+import { useDispatch, useSelector } from "react-redux";
+import { getRingCategories } from "../../../actions/ring";
+
+const schema = yup.object({
+  name: yup.string().required("Tên không được để trống"),
+  description: yup.string().required("Mô tả không được để trống"),
+});
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const schema = yup.object({});
-export default function AddRingCategoryDialog({
+
+export default function UpdateRingCategoryDialog({
   open,
-  handleCloseAddDialog,
-  dispatch,
+  handleCloseUpdateDialog,
+  ringCategoryId,
 }) {
   const {
     register,
     handleSubmit,
     resetField,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const submitForm = (data, e) => {
-    e.preventDefault();
-    dispatch(addRingCategory(data));
-    handleCloseAddDialog();
+  const [ringCategory, setRingCategory] = useState(null);
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.ringCategory);
+
+  useEffect(() => {
+    dispatch(getRingCategories());
+  }, []);
+
+  useEffect(() => {
+    console.log(categories);
+    setRingCategory(
+      categories?.filter((cate) => cate.ringCategoryId !== ringCategoryId)[0]
+    );
+  }, [ringCategoryId, categories]);
+
+  useEffect(() => {
+    open ? setInput() : resetInput();
+  }, [ringCategory, open]);
+
+  const submitForm = (data) => {
+    console.log(data);
   };
+
+  const setInput = () => {
+    setValue("name", ringCategory?.name);
+    setValue("description", ringCategory?.description);
+  };
+  const resetInput = () => {
+    resetField("name", "");
+    resetField("description", "");
+  };
+
   return (
     <React.Fragment>
       <Dialog
         fullScreen
         open={open}
-        onClose={handleCloseAddDialog}
+        onClose={handleCloseUpdateDialog}
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: "relative" }}>
@@ -51,7 +85,7 @@ export default function AddRingCategoryDialog({
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleCloseAddDialog}
+              onClick={handleCloseUpdateDialog}
               aria-label="close"
             >
               <CloseIcon />

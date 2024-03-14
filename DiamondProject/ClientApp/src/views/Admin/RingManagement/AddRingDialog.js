@@ -80,7 +80,7 @@ export default function AddRingDialog({ open, handleCloseAddDialog }) {
       handleCloseAddDialog();
     } catch (error) {
       console.log(error);
-      alert("Them khong thanh cong!");
+      alert("Thêm không thành công!");
     }
     // const res = await dispatch(addRing(fd));
     // if (res) {

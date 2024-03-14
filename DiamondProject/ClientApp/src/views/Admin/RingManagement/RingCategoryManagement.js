@@ -5,10 +5,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import Loading from "../../../components/Loading/Loading";
 import { Button } from "@mui/material";
 import AddRingCategoryDialog from "./AddRingCategoryDialog";
+import UpdateRingCategoryDialog from "./UpdateRingCategoryDialog";
 
 export default function RingCategoryManagement() {
   const dispatch = useDispatch();
   const ringCategories = useSelector((state) => state.ringCategory);
+
+  const [openUpdate, setOpenUpdate] = useState(false);
+
   useEffect(() => {
     dispatch(getRingCategories());
   }, []);
@@ -33,7 +37,7 @@ export default function RingCategoryManagement() {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const handleSelected = (params) => {
-    setSelectedCategory(params.row);
+    setSelectedCategory(params.row.id);
   };
   const handleDeleteCategory = async () => {
     let res = await dispatch(deleteCategory(selectedCategory.id));
@@ -47,6 +51,13 @@ export default function RingCategoryManagement() {
   };
   const handleCloseAddDialog = () => {
     setOpenAdd(false);
+  };
+
+  const handleCloseUpdateDialog = () => {
+    setOpenUpdate(false);
+  };
+  const handleOpenUpdateDialog = () => {
+    selectedCategory ? setOpenUpdate(true) : alert("Bạn chưa chọn loại nhẫn");
   };
 
   return ringCategories ? (
@@ -74,7 +85,12 @@ export default function RingCategoryManagement() {
         >
           Thêm
         </Button>
-        <Button className="mg-right-1" variant="outlined" color="secondary">
+        <Button
+          className="mg-right-1"
+          variant="outlined"
+          color="secondary"
+          onClick={() => handleOpenUpdateDialog()}
+        >
           Sửa
         </Button>
         <Button
@@ -86,6 +102,11 @@ export default function RingCategoryManagement() {
           Xóa
         </Button>
       </div>
+      <UpdateRingCategoryDialog
+        open={openUpdate}
+        handleCloseUpdateDialog={handleCloseUpdateDialog}
+        ringCategoryId={selectedCategory}
+      />
       <AddRingCategoryDialog
         open={openAdd}
         handleCloseAddDialog={handleCloseAddDialog}

@@ -61,7 +61,6 @@ export default function UpdateRingDialog({
   const [imgs, setImgs] = useState([]);
   const [category, setCategory] = useState(null);
   const [ring, setRing] = useState(null);
-  const [ringName, setRingName] = useState(null);
 
   const categories = useSelector((state) => state.ringCategory);
   const rings = useSelector((state) => state.ring);
@@ -74,10 +73,6 @@ export default function UpdateRingDialog({
     //console.log(ring);
     open ? setInput() : resetInput();
   }, [open, rings, ringId]);
-
-  useEffect(() => {
-    setRingName(ring?.ringName);
-  }, [ring]);
 
   const resetInput = () => {
     resetField("price", "");
