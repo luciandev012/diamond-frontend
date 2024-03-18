@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { getRingCategories } from "../../../actions/ring";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const schema = yup.object({
   name: yup.string().required("Tên không được để trống"),
@@ -28,7 +29,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function UpdateRingCategoryDialog({
   open,
   handleCloseUpdateDialog,
-  ringCategoryId,
+  ringCategory,
+  dispatch,
 }) {
   const {
     register,
@@ -39,28 +41,28 @@ export default function UpdateRingCategoryDialog({
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const [ringCategory, setRingCategory] = useState(null);
-  const dispatch = useDispatch();
-  const categories = useSelector((state) => state.ringCategory);
-
-  useEffect(() => {
-    dispatch(getRingCategories());
-  }, []);
-
-  useEffect(() => {
-    console.log(categories);
-    setRingCategory(
-      categories?.filter((cate) => cate.ringCategoryId !== ringCategoryId)[0]
-    );
-  }, [ringCategoryId, categories]);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     open ? setInput() : resetInput();
-  }, [ringCategory, open]);
+  }, [open]);
 
-  const submitForm = (data) => {
-    console.log(data);
+  const submitForm = async (data) => {
+    try {
+      const response = await axiosPrivate.put(
+        `/ring/ring-category/${ringCategory.id}`,
+        data
+      );
+      console.log(response);
+      dispatch(updateRingCategoryAction(response.data));
+      handleCloseUpdateDialog();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateRingCategoryAction = (data) => async (dispatch) => {
+    dispatch({ type: "UPDATE_RING_CATEGORY", payload: data });
   };
 
   const setInput = () => {

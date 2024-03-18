@@ -35,9 +35,9 @@ export default function RingCategoryManagement() {
       })
     : [];
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("null");
   const handleSelected = (params) => {
-    setSelectedCategory(params.row.id);
+    setSelectedCategory(params.row);
   };
   const handleDeleteCategory = async () => {
     let res = await dispatch(deleteCategory(selectedCategory.id));
@@ -105,7 +105,8 @@ export default function RingCategoryManagement() {
       <UpdateRingCategoryDialog
         open={openUpdate}
         handleCloseUpdateDialog={handleCloseUpdateDialog}
-        ringCategoryId={selectedCategory}
+        ringCategory={selectedCategory}
+        dispatch={dispatch}
       />
       <AddRingCategoryDialog
         open={openAdd}

@@ -4,6 +4,12 @@ const ringCategory = (state = [], action) => {
       return action.payload;
     case "ADD_RING_CATEGORY":
       return [...state, action.payload];
+    case "UPDATE_RING_CATEGORY":
+      return state.map((cate) =>
+        cate.ringCategoryId === action.payload.ringCategoryId
+          ? action.payload
+          : cate
+      );
     case "DELETE_RING_CATEGORY":
       return state.filter((cate) => cate.ringCategoryId !== action.payload);
     default:
