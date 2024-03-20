@@ -5,6 +5,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import Loading from "../../../components/Loading/Loading";
 import AddBrandDialog from "./AddBrandDialog";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { ALERT_DELETE_MESSAGE } from "../../../common-message";
+import UpdateBrandDialog from "./UpdateBrandDialog";
 
 export default function BrandManagement() {
   const dispatch = useDispatch();
@@ -13,7 +16,10 @@ export default function BrandManagement() {
   }, []);
 
   const brands = useSelector((state) => state.brand);
-  console.log(brands);
+  const axiosPrivate = useAxiosPrivate();
+  const [openAdd, setOpenAdd] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [openUpdate, setOpenUpdate] = useState(false);
 
   //config table
   const columns = [
@@ -32,12 +38,11 @@ export default function BrandManagement() {
         };
       })
     : [];
-  const [selectedBrand, setSelectedBrand] = useState(null);
+
   const handleSelected = (params) => {
     setSelectedBrand(params.row);
   };
 
-  const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAddDialog = () => {
     setOpenAdd(true);
   };
@@ -46,11 +51,25 @@ export default function BrandManagement() {
   };
 
   const handleDeleteBrand = async () => {
-    let res = await dispatch(deleteBrand(selectedBrand.id));
-    console.log(res);
-    if (!res) {
-      alert("Xóa không thành công!");
+    try {
+      const response = await axiosPrivate.delete(
+        `/ringbrand/brand/${selectedBrand.id}`
+      );
+      dispatch(deleteBrandAction(selectedBrand.id));
+    } catch (error) {
+      alert(ALERT_DELETE_MESSAGE + error.message);
     }
+  };
+
+  const deleteBrandAction = (id) => async (dispatch) => {
+    dispatch({ type: "DELETE_BRAND", payload: id });
+  };
+
+  const handleCloseUpdateDialog = () => {
+    setOpenUpdate(false);
+  };
+  const handleOpenUpdateDialog = () => {
+    setOpenUpdate(true);
   };
 
   return brands ? (
@@ -78,7 +97,12 @@ export default function BrandManagement() {
         >
           Thêm
         </Button>
-        <Button className="mg-right-1" variant="outlined" color="secondary">
+        <Button
+          className="mg-right-1"
+          variant="outlined"
+          color="secondary"
+          onClick={() => handleOpenUpdateDialog()}
+        >
           Sửa
         </Button>
         <Button
@@ -94,7 +118,17 @@ export default function BrandManagement() {
         open={openAdd}
         handleCloseAddDialog={handleCloseAddDialog}
         dispatch={dispatch}
+        axiosPrivate={axiosPrivate}
       />
+      {selectedBrand && (
+        <UpdateBrandDialog
+          openUpdate={openUpdate}
+          handleCloseUpdateDialog={handleCloseUpdateDialog}
+          dispatch={dispatch}
+          axiosPrivate={axiosPrivate}
+          brand={selectedBrand}
+        />
+      )}
     </>
   ) : (
     <Loading />

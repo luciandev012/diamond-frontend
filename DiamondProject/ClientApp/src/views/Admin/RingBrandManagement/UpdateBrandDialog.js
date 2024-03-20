@@ -8,12 +8,15 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ALERT_ADD_MESSAGE } from "../../../common-message";
+import {
+  ALERT_ADD_MESSAGE,
+  ALERT_MODIFY_MESSAGE,
+} from "../../../common-message";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,31 +26,45 @@ const schema = yup.object({
   description: yup.string(),
 });
 
-export default function AddBrandDialog({
-  open,
-  handleCloseAddDialog,
+export default function UpdateBrandDialog({
+  openUpdate,
+  handleCloseUpdateDialog,
   dispatch,
   axiosPrivate,
+  brand,
 }) {
   const {
     register,
     handleSubmit,
     resetField,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    openUpdate ? setInput() : resetInput();
+  }, [openUpdate]);
+
   const submitForm = async (data, e) => {
     e.preventDefault();
     try {
-      const response = await axiosPrivate.post("ringbrand/brand", data);
-      dispatch(addBrandAction(response.data));
-      handleCloseAddDialog();
+      const response = await axiosPrivate.put(
+        `ringbrand/brand/${brand.id}`,
+        data
+      );
+      dispatch(updateBrandAction(response.data));
+      handleCloseUpdateDialog();
       resetInput();
     } catch (error) {
-      alert(ALERT_ADD_MESSAGE);
+      alert(ALERT_MODIFY_MESSAGE);
     }
+  };
+
+  const setInput = () => {
+    setValue("name", brand.name);
+    setValue("description", brand.description);
   };
 
   const resetInput = () => {
@@ -55,16 +72,16 @@ export default function AddBrandDialog({
     resetField("description", "");
   };
 
-  const addBrandAction = (data) => async (dispatch) => {
-    dispatch({ type: "ADD_BRAND", payload: data });
+  const updateBrandAction = (data) => async (dispatch) => {
+    dispatch({ type: "UPDATE_BRAND", payload: data });
   };
 
   return (
     <React.Fragment>
       <Dialog
         fullScreen
-        open={open}
-        onClose={handleCloseAddDialog}
+        open={openUpdate}
+        onClose={handleCloseUpdateDialog}
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: "relative" }}>
@@ -72,13 +89,13 @@ export default function AddBrandDialog({
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleCloseAddDialog}
+              onClick={handleCloseUpdateDialog}
               aria-label="close"
             >
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Thêm hãng
+              Sửa hãng
             </Typography>
           </Toolbar>
         </AppBar>

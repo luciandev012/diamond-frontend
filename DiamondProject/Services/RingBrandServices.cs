@@ -34,7 +34,7 @@ namespace DiamondProject.Services
 			var res = await _context.SaveChangesAsync();
 			return res > 0 ? brand : null;
 		}
-		public async Task<bool> UpdateBrandAsync(Guid id, BrandDTO model)
+		public async Task<Brand> UpdateBrandAsync(Guid id, BrandDTO model)
 		{
 			var brand = await _context.Brands.FindAsync(id);
 			if(brand != null)
@@ -44,9 +44,9 @@ namespace DiamondProject.Services
 				brand.PathName = Helper.GetPathName(model.Name);
 
 				await _context.SaveChangesAsync();
-				return true;
+				return brand;
 			}
-			return false;
+			return null;
 		}
 
 		public async Task<bool> DeleteBrandAsync(Guid id)
@@ -61,6 +61,47 @@ namespace DiamondProject.Services
 			return false;
 		}
 
-	}
+        public async Task<List<RingBrand>> GetRingBrandsAsync() => await _context.RingsBrands.ToListAsync();
+
+        public async Task<RingBrand> GetRingBrandAsync(Guid id) => await _context.RingsBrands.FindAsync(id);
+
+        public async Task<RingBrand> RingBrandAsync(RingBrandDTO model)
+        {
+            var ringBrand = new RingBrand()
+            {
+                
+            };
+            await _context.Brands.AddAsync(brand);
+            var res = await _context.SaveChangesAsync();
+            return res > 0 ? brand : null;
+        }
+        public async Task<Brand> UpdateBrandAsync(Guid id, BrandDTO model)
+        {
+            var brand = await _context.Brands.FindAsync(id);
+            if (brand != null)
+            {
+                brand.Name = model.Name;
+                brand.Description = model.Description;
+                brand.PathName = Helper.GetPathName(model.Name);
+
+                await _context.SaveChangesAsync();
+                return brand;
+            }
+            return null;
+        }
+
+        public async Task<bool> DeleteBrandAsync(Guid id)
+        {
+            var brand = await _context.Brands.FindAsync(id);
+            if (brand != null)
+            {
+                _context.Brands.Remove(brand);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+    }
 }
 
