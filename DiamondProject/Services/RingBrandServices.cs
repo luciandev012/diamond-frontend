@@ -65,41 +65,41 @@ namespace DiamondProject.Services
 
         public async Task<RingBrand> GetRingBrandAsync(Guid id) => await _context.RingsBrands.FindAsync(id);
 
-        public async Task<RingBrand> RingBrandAsync(RingBrandDTO model)
+        public async Task<RingBrand> CreateRingBrandAsync(RingBrandDTO model)
         {
+			var ringBrandId = Guid.NewGuid();
             var ringBrand = new RingBrand()
             {
-                
+                 RingBrandId = ringBrandId,
+				 Name = model.Name,
+				 PathName = Helper.GetPathName(model.Name),
+				 Description = model.Description,
+				 MadeIn = model.MadeIn,
+				 Material = model.Material,
+				 Price = model.Price,
+				 Size = model.Size,
+				 BrandId = model.BrandId,
+				 Quantity = model.Quantity
             };
-            await _context.Brands.AddAsync(brand);
+
+			var listImages = new List<RingBrandImage>();
+			foreach (var item in model.Images)
+			{
+				var imageId = Guid.NewGuid();
+				var imgae = new RingBrandImage()
+				{
+					Name = item.FileName,
+					RingBrandId = ringBrandId,
+					Path = await _imageServices.SaveFileAsync(item),
+					RingBrandImageId = imageId
+				};
+				listImages.Add(imgae);
+			}
+
+            await _context.RingsBrands.AddAsync(ringBrand);
+			await _context.RingsBrandImages.AddRangeAsync(listImages);
             var res = await _context.SaveChangesAsync();
-            return res > 0 ? brand : null;
-        }
-        public async Task<Brand> UpdateBrandAsync(Guid id, BrandDTO model)
-        {
-            var brand = await _context.Brands.FindAsync(id);
-            if (brand != null)
-            {
-                brand.Name = model.Name;
-                brand.Description = model.Description;
-                brand.PathName = Helper.GetPathName(model.Name);
-
-                await _context.SaveChangesAsync();
-                return brand;
-            }
-            return null;
-        }
-
-        public async Task<bool> DeleteBrandAsync(Guid id)
-        {
-            var brand = await _context.Brands.FindAsync(id);
-            if (brand != null)
-            {
-                _context.Brands.Remove(brand);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            return false;
+            return res > 0 ? ringBrand : null;
         }
 
     }
