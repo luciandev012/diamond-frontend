@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getRingCategory } from "../../../actions/ring";
 import Loading from "../../../components/Loading/Loading";
 import "./ring-category.css";
 import { Icon } from "@iconify/react";
 import { Checkbox } from "@mui/material";
-import { formatMoney } from "../../../helper/helper";
 import ListRingFilter from "./ListRingFilter";
 
 export default function RingCategory() {

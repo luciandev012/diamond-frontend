@@ -1,8 +1,82 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./header.css";
 import SubMenuByCategory from "../../components/SubMenuByCategory";
 import { useDispatch, useSelector } from "react-redux";
 import { getRingCategories } from "../../actions/ring";
+import { Link } from "react-router-dom";
+
+const listMenu = [
+  {
+    id: 0,
+    text: "Nhẫn tự chế tác",
+    path: "",
+    subMenu: [
+      {
+        id: 0,
+        text: "Wedding rings",
+        path: "",
+      },
+      {
+        id: 1,
+        text: "Couple rings",
+        path: "",
+      },
+      {
+        id: 2,
+        text: "Custom rings",
+        path: "",
+      },
+    ],
+  },
+  {
+    id: 1,
+    text: "Nhẫn hãng",
+    path: "",
+    subMenu: [],
+  },
+  {
+    id: 2,
+    text: "Lắc tay",
+    path: "",
+    subMenu: [],
+  },
+  {
+    id: 3,
+    text: "Dây chuyền",
+    path: "",
+    subMenu: [],
+  },
+  {
+    id: 4,
+    text: "Khuyên tai",
+    path: "",
+    subMenu: [],
+  },
+  {
+    id: 5,
+    text: "Chế độ thu đổi",
+    path: "",
+    subMenu: [],
+  },
+];
+
+const Search = ({ mobile }) => {
+  return (
+    <div className={`search-container ${mobile && "mb"}`}>
+      <span>
+        <i className="fa-solid fa-magnifying-glass"></i>
+      </span>
+      <form className="d-flex">
+        <input
+          className="search-input"
+          type="search"
+          placeholder="Nhập tên sản phẩm"
+          aria-label="Search"
+        />
+      </form>
+    </div>
+  );
+};
 
 export default function Header() {
   const ringCategories = useSelector((state) => state.ringCategory);
@@ -10,21 +84,21 @@ export default function Header() {
   useEffect(() => {
     dispatch(getRingCategories());
   }, []);
+
+  const [navigatonActive, setNavigationActive] = useState(-1);
+
+  const handleNavigationActive = (index) => {
+    if (navigatonActive === index) {
+      setNavigationActive(-1);
+    } else {
+      setNavigationActive(index);
+    }
+  };
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
@@ -43,22 +117,10 @@ export default function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <div className="search-container">
-                  <span>
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                  </span>
-                  <form className="d-flex">
-                    <input
-                      className="search-input"
-                      type="search"
-                      placeholder="Search"
-                      aria-label="Search"
-                    />
-                  </form>
-                </div>
+                <Search />
               </li>
             </ul>
-            <div>
+            {/* <div>
               <a className="header-right-item">
                 <i className="fa-regular fa-envelope"></i> Newsletter
               </a>
@@ -71,12 +133,54 @@ export default function Header() {
               <a className="header-right-item">
                 <i className="fa-regular fa-heart"></i> My wishlist
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </nav>
+      <div className="custom-toggle">
+        <input
+          type="checkbox"
+          className="custom-toggle-checkbox"
+          id="custom-toggle"
+        />
+        <label htmlFor="custom-toggle" className="custom-toggle-button">
+          <span className="custom-toggle-icon">&nbsp;</span>
+        </label>
+        <div className="custom-toggle-bg">&nbsp;</div>
+        <nav class="navigation-nav">
+          <ul class="navigation-list">
+            {listMenu.map((menu) => {
+              return (
+                <li
+                  class={`navigation-item ${
+                    navigatonActive === menu.id ? "active" : ""
+                  }`}
+                  onClick={() => handleNavigationActive(menu.id)}
+                  key={menu.id}
+                >
+                  <Link to={menu.path} class="navigation-link">
+                    {menu.text}
+                  </Link>
+                  <i className="fa-solid fa-angle-right"></i>
+                  <ul className="sub-navigation-list">
+                    {menu.subMenu.map((sub) => {
+                      return (
+                        <li key={sub.id}>
+                          <Link to={sub.path}>{sub.text}</Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
       <div className="logo-container">
-        <a className="logo-img text-logo">kim cương như an</a>
+        <Link to={"/"} className="logo-img text-logo">
+          kim cương như an
+        </Link>
       </div>
       <div className="header-bottom">
         <ul className="header-menu">
@@ -173,6 +277,9 @@ export default function Header() {
           <li className="menu-item">Khuyên tai</li>
           <li className="menu-item">chế độ thu đổi</li>
         </ul>
+        <div className="mobile-search">
+          <Search mobile={true} />
+        </div>
       </div>
     </header>
   );

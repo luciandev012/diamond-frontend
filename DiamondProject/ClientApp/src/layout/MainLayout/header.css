@@ -9,3 +9,167 @@
   outline: none;
   border-bottom: 1px solid #1f1f1f;
 }
+
+.mobile-search {
+  display: none;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.search-container.mb {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.custom-toggle {
+  display: none;
+}
+
+@media (max-width: 440px) {
+  .custom-toggle {
+    display: block;
+  }
+  .mobile-search {
+    display: block;
+  }
+}
+
+.custom-toggle-checkbox {
+  display: none;
+}
+
+.custom-toggle-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  top: 4rem;
+  left: 0.5rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 2000;
+  background-color: #fff;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.custom-toggle-bg {
+  width: 1.5rem;
+  height: 1.5rem;
+  top: 4rem;
+  left: 1rem;
+  border-radius: 50%;
+  background-image: radial-gradient(#7ed56f, #28b485);
+  z-index: 1000;
+  position: fixed;
+  transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.navigation-nav {
+  height: 100vh;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1500;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.navigation-list {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  list-style: none;
+  position: absolute;
+  top: 5rem;
+  width: 100%;
+}
+
+.navigation-item {
+  margin: 1rem;
+  position: relative;
+}
+
+.navigation-item i {
+  font-size: 2rem;
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+}
+
+.navigation-item.active i,
+.navigation-item.active i {
+  transform: rotate(90deg);
+  transition: transform 0.2s ease-in-out;
+}
+
+.navigation-item.active .sub-navigation-list {
+  display: block;
+}
+
+.sub-navigation-list {
+  display: none;
+}
+
+.sub-navigation-list li {
+  font-size: 1.5rem;
+}
+
+.navigation-link {
+  font-size: 2rem;
+}
+
+.custom-toggle-checkbox:checked ~ .custom-toggle-bg {
+  transform: scale(80);
+}
+
+.custom-toggle-checkbox:checked ~ .navigation-nav {
+  opacity: 1;
+  width: 100%;
+}
+
+.custom-toggle-icon {
+  position: relative;
+  margin-top: 1rem;
+  width: 1.5rem;
+  height: 2px;
+  background-color: #000;
+  display: inline-block;
+}
+
+.custom-toggle-icon::after,
+.custom-toggle-icon::before {
+  width: 1.5rem;
+  height: 2px;
+  background-color: #000;
+  display: inline-block;
+  content: "";
+  left: 0;
+  position: absolute;
+  transition: all 0.2s;
+}
+
+.custom-toggle-icon::after {
+  top: -0.5rem;
+}
+
+.custom-toggle-icon::before {
+  top: 0.5rem;
+}
+
+.custom-toggle-checkbox:checked + .custom-toggle-button .custom-toggle-icon {
+  background-color: transparent;
+}
+
+.custom-toggle-checkbox:checked
+  + .custom-toggle-button
+  .custom-toggle-icon::before {
+  top: 0;
+  transform: rotate(135deg);
+}
+
+.custom-toggle-checkbox:checked
+  + .custom-toggle-button
+  .custom-toggle-icon::after {
+  top: 0;
+  transform: rotate(-135deg);
+}

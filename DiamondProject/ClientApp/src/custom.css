@@ -62,6 +62,12 @@ header {
   margin-bottom: 0;
 }
 
+@media (max-width: 440px) {
+  .header-menu {
+    display: none;
+  }
+}
+
 .menu-item {
   cursor: pointer;
   text-transform: uppercase;
