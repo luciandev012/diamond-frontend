@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatMoney } from "../../../helper/helper";
+import { formatMoney, getImgUrl } from "../../../helper/helper";
 
 export default function ListRingFilter({ rings }) {
   return rings
@@ -8,7 +8,7 @@ export default function ListRingFilter({ rings }) {
         return (
           <div className="col-md-3 product" id="product" key={ring.ringId}>
             <img
-              src="/images/diamond_rings.png"
+              src={getImgUrl(ring.imageName)}
               alt="img"
               className="card-product card-product-front"
               id={ring.ringId}

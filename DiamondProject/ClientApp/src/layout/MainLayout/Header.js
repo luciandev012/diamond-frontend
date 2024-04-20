@@ -3,7 +3,7 @@ import "./header.css";
 import SubMenuByCategory from "../../components/SubMenuByCategory";
 import { useDispatch, useSelector } from "react-redux";
 import { getRingCategories } from "../../actions/ring";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const listMenu = [
   {
@@ -61,17 +61,26 @@ const listMenu = [
 ];
 
 const Search = ({ mobile }) => {
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    keyword !== "" && navigate(`/search/${keyword}`, { replace: true });
+    setKeyword("");
+  };
   return (
     <div className={`search-container ${mobile && "mb"}`}>
       <span>
         <i className="fa-solid fa-magnifying-glass"></i>
       </span>
-      <form className="d-flex">
+      <form className="d-flex" onSubmit={(e) => handleSubmitSearch(e)}>
         <input
           className="search-input"
           type="search"
           placeholder="Nhập tên sản phẩm"
           aria-label="Search"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
         />
       </form>
     </div>
@@ -147,18 +156,18 @@ export default function Header() {
           <span className="custom-toggle-icon">&nbsp;</span>
         </label>
         <div className="custom-toggle-bg">&nbsp;</div>
-        <nav class="navigation-nav">
-          <ul class="navigation-list">
+        <nav className="navigation-nav">
+          <ul className="navigation-list">
             {listMenu.map((menu) => {
               return (
                 <li
-                  class={`navigation-item ${
+                  className={`navigation-item ${
                     navigatonActive === menu.id ? "active" : ""
                   }`}
                   onClick={() => handleNavigationActive(menu.id)}
                   key={menu.id}
                 >
-                  <Link to={menu.path} class="navigation-link">
+                  <Link to={menu.path} className="navigation-link">
                     {menu.text}
                   </Link>
                   <i className="fa-solid fa-angle-right"></i>

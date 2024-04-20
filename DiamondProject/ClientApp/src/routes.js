@@ -9,6 +9,7 @@ import RingCategoryManagement from "./views/Admin/RingManagement/RingCategoryMan
 import RingCategory from "./views/Client/RingCategory/RingCategory";
 import BrandManagement from "./views/Admin/RingBrandManagement/BrandManagement";
 import Login from "./views/Admin/User/Login";
+import SearchResult from "./views/Client/SearchResult/SearchResult";
 
 export default function Route() {
   return useRoutes([
@@ -27,6 +28,10 @@ export default function Route() {
         {
           path: "ring-category/:id",
           element: <RingCategory />,
+        },
+        {
+          path: "search/:keyword",
+          element: <SearchResult />,
         },
       ],
     },

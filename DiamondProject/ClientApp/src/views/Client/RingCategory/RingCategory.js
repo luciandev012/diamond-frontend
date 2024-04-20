@@ -145,7 +145,7 @@ export default function RingCategory() {
   return category ? (
     <section className="">
       <div className="follow">
-        <div className="bread-crumb">bread crumb</div>
+        <div className="bread-crumb">Hiển thị theo loại</div>
         <div className="category-title">
           <h3 className="category-name">{category.name}</h3>
           <button

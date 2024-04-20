@@ -125,5 +125,12 @@ namespace DiamondProject.Services
         }
 
         public async Task<Ring> GetRingByIdAsync(Guid id) => await _context.Rings.Include(x => x.Images).Where(x => x.RingId == id).FirstOrDefaultAsync();
+
+        public async Task<List<Ring>> FindRingByNameAsync(string keyword)
+        {
+            var result = await _context.Rings.Include(x => x.Images).Where(x => x.RingName.Contains(keyword)).ToListAsync();
+
+            return result;
+        }
     }
 }
