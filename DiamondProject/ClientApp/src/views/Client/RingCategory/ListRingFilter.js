@@ -8,7 +8,11 @@ export default function ListRingFilter({ rings }) {
         return (
           <div className="col-md-3 product" id="product" key={ring.ringId}>
             <img
-              src={getImgUrl(ring.imageName)}
+              src={
+                ring.imageName
+                  ? getImgUrl(ring.imageName)
+                  : "/images/diamond_rings.png"
+              }
               alt="img"
               className="card-product card-product-front"
               id={ring.ringId}

@@ -65,7 +65,7 @@ export default function RingCategory() {
   useEffect(() => {
     filterBySelected();
   }, [selectedMadeIn, selectedMaterial]);
-
+  console.log(rings);
   const handleClickSlideDescription = () => {
     setToggleArrow(!toggleArrow);
   };
